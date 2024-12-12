@@ -1,8 +1,8 @@
-import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, udf, array_distinct, explode
-from pyspark.sql.types import StringType, StructType, StructField
+from pyspark.sql.functions import col, udf, split
+from pyspark.sql.types import StringType
 from geoip2.database import Reader
+import sys
 
 # Función para obtener la geolocalización de una IP
 def get_geo_info(ip, geo_db_path):
@@ -40,9 +40,10 @@ ips_df = df.select(col("Source").alias("IP")).union(df.select(col("Destination")
 geo_udf = geo_info_udf(geo_db_path)
 geolocated_df = ips_df.withColumn("GeoInfo", geo_udf(col("IP")))
 
-# Separar la columna GeoInfo en Country y City
-split_geo = geolocated_df.withColumn("Country", col("GeoInfo").getItem(0)) \
-                         .withColumn("City", col("GeoInfo").getItem(1))
+# Separar la columna GeoInfo en Country y City (usando 'split')
+split_geo = geolocated_df.withColumn("GeoInfoSplit", split(col("GeoInfo"), ",")) \
+                         .withColumn("Country", col("GeoInfoSplit").getItem(0)) \
+                         .withColumn("City", col("GeoInfoSplit").getItem(1))
 
 # Eliminar duplicados en Country y City
 unique_geo_df = split_geo.select("Country", "City").distinct()
