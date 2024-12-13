@@ -1,6 +1,6 @@
 # Group9-Cloud-Big-Data
 Proyecto final de la asignatura de Cloud y Big Data de la Universidad Complutense de Madrid, Facultad de Informática, 2024-2025
-#Participantes
+# Participantes
 - Alberto Martin Oruña ([@Alberto12x](https://github.com/Alberto12x/))
 - José Caleb Gálvez Valladares ([@JGalvez27](https://github.com/JGalvez27/))
 #Índice
