@@ -3,7 +3,7 @@ Proyecto final de la asignatura de Cloud y Big Data de la Universidad Complutens
 # Participantes
 - Alberto Martin Oruña ([@Alberto12x](https://github.com/Alberto12x/))
 - José Caleb Gálvez Valladares ([@JGalvez27](https://github.com/JGalvez27/))
-#Índice
+# Índice
 
 # Informe del Proyecto
 ## Descripción del problema.
