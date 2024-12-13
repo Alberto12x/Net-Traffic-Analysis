@@ -16,7 +16,11 @@ comparador = int(sys.argv[4])  # comparador
 df = spark.read.csv(input_path, header=True, inferSchema=True)
 
 # Filtrar los registros donde Bandwidth_bps es mayor que el umbral
-filtered_df = df.filter(col("Bandwidth_bps") > threshold) if comparador == 0 else df.filter(col("Bandwidth_bps") <= threshold)
+filtered_df = (
+    df.filter(col("Bandwidth_bps") > threshold)
+    if comparador == 0
+    else df.filter(col("Bandwidth_bps") <= threshold)
+)
 
 
 # Guardar el resultado como archivo CSV

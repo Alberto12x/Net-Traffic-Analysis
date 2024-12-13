@@ -16,8 +16,7 @@ df = spark.read.csv(input_path, header=True, inferSchema=True)
 df = df.withColumn("Length", col("Length").cast("integer"))
 
 # Calcular la media de ancho de banda por protocolo
-avg_bandwidth_df = df.groupBy("Protocol") \
-                     .agg(avg("Length").alias("AverageLength"))
+avg_bandwidth_df = df.groupBy("Protocol").agg(avg("Length").alias("AverageLength"))
 
 # Guardar el resultado como archivo CSV
 avg_bandwidth_df.write.option("header", "true").csv(output_path)
