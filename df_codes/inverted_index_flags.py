@@ -28,14 +28,10 @@ tcp_flags = {"syn", "ack", "rst", "fin", "psh", "urg"}
 
 tcp_df = (
     df.filter(col("Protocol") == "TCP")
-    .withColumn("Words", split(col("Info"), "\\s+"))
-    .select(col("PacketID"), explode(col("Words")).alias("Word"))
-    .withColumn("Word", lower(col("Word")))
-    .filter(col("Word").rlike(r"\[.*\]"))
-    .withColumn("Word", regexp_extract(col("Word"), r"\[([^\]]+)\]", 1))
-    .filter(col("Word").rlike(r"^(?:" + "|".join(tcp_flags) + r")$"))
-    .select("PacketID", "Word")
-)  # Seleccionamos solo las columnas necesarias
+    .withColumn("BracketContent", regexp_extract(col("Info"), r"\[([^\]]+)\]", 0))  # Extraer contenido de corchetes
+    .filter(col("BracketContent") != "")  # Filtrar filas donde no hay corchetes
+    .select(col("PacketID"), col("BracketContent").alias("Word"))  # Renombrar columna como "Word"
+)
 
 # Extraer métodos HTTP (GET, POST)
 http_methods = {"get", "post"}
@@ -47,16 +43,16 @@ http_df = (
     .withColumn("Word", lower(col("Word")))
     .filter(col("Word").rlike(r"^(?:" + "|".join(http_methods) + r")$"))
     .select("PacketID", "Word")
-)  # Seleccionamos solo las columnas necesarias
+)
 
 # Extraer eventos TLS (Client Hello, Server Hello)
 tls_events = {"client hello", "server hello"}
 
 tls_df = (
     df.filter(col("Protocol").startswith("TLS"))
-    .withColumn("Word", col("Info"))
+    .withColumn("Word", col("Info"))  # Renombrar contenido directamente a "Word"
     .select("PacketID", "Word")
-)  # Seleccionamos solo las columnas necesarias
+)
 
 # Unir todos los DataFrames (TCP, HTTP y TLS) en uno solo
 combined_df = tcp_df.union(http_df).union(tls_df)
