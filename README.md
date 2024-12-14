@@ -2,16 +2,10 @@
 
 Proyecto final de la asignatura de Cloud y Big Data de la Universidad Complutense de Madrid, Facultad de Informática, 2024-2025
 
-## Participantes
-
-- Alberto Martin Oruña ([@Alberto12x](https://github.com/Alberto12x/))
-- José Caleb Gálvez Valladares ([@JGalvez27](https://github.com/JGalvez27/))
-
 ## Índice
 
 - [Group9-Cloud-Big-Data](#group9-cloud-big-data)
   - [Participantes](#participantes)
-  - [Índice](#índice)
   - [Informe del Proyecto](#informe-del-proyecto)
     - [Descripción del problema](#descripción-del-problema)
     - [Necesidad del procesamiento de Big Data y la computación en la nube](#necesidad-del-procesamiento-de-big-data-y-la-computación-en-la-nube)
@@ -20,10 +14,18 @@ Proyecto final de la asignatura de Cloud y Big Data de la Universidad Complutens
     - [Diseño del software (diseño arquitectónico, base del código, dependencias…)](#diseño-del-software-diseño-arquitectónico-base-del-código-dependencias)
     - [Uso (incluyendo capturas de pantalla que demuestren su funcionamiento)](#uso-incluyendo-capturas-de-pantalla-que-demuestren-su-funcionamiento)
       - [Uso fuera de la insfractuctura cloud](#uso-fuera-de-la-insfractuctura-cloud)
+      - [Maquina local en el cloud](#maquina-local-en-el-cloud)
+      - [Cluster](#cluster)
+      - [Archivos outputs](#archivos-outputs)
     - [Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas](#evaluación-de-rendimiento-aceleración-en-la-nube-y-discusión-sobre-los-sobrecostes-identificados-y-optimizaciones-realizadas)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
     - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
     - [Referencias](#referencias)
+
+## Participantes
+
+- Alberto Martin Oruña ([@Alberto12x](https://github.com/Alberto12x/))
+- José Caleb Gálvez Valladares ([@JGalvez27](https://github.com/JGalvez27/))
 
 ## Informe del Proyecto
 
