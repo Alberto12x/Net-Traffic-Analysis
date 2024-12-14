@@ -110,7 +110,7 @@ Ejemplo de entrada en el dataset:
 | 3   | 2022-06-01 11:32:29.327541    | 10.215.173.1   | 218.38.31.68   | TLSv1.2      | 557     | Client Hello |
 | 4   | 2022-06-01 11:32:30.276864    | 192.0.0.2      | 10.215.173.2   | TLSv1.3      | 1500     | Application Data, Application Data, Application Data |
 
-El dataset que se ha utilizado en este proyecto pesa 1.3 GB
+El dataset que se ha utilizado en este proyecto pesa 1.3 GB, este tamaño ha hecho que recurramos a GIT LFS para poder almacenaro en github como pide el enunciado.
 
 ![Imagen del peso del dataset](./imagenes/peso_dataset.png)
 
