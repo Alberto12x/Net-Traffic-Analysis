@@ -2,24 +2,29 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, avg
 import sys
 
-# Crear la sesión de Spark
+"""
+Módulo que calcula la media dle ancho de banda en bits por segundo de los distintos protocolos de red
+"""
+
+# Creamos la sesion de spark y ajustamos el nivel del logger a WARN
 spark = SparkSession.builder.appName("Average Bandwidth by Protocol").getOrCreate()
+spark.sparkContext.setLogLevel("WARN")
 
 # Leer los argumentos de entrada y salida
-input_path = sys.argv[1]  # Archivo CSV de entrada
-output_path = sys.argv[2]  # Carpeta de salida
+input_path = sys.argv[1]
+output_path = sys.argv[2]
 
-# Leer el archivo CSV
+# Leemos el archivo CSV
 df = spark.read.csv(input_path, header=True, inferSchema=True)
 
-# Convertir las columnas necesarias al tipo apropiado
+# Casteamos la columna de Length a entero
 df = df.withColumn("Length", col("Length").cast("integer"))
 
-# Calcular la media de ancho de banda por protocolo
+# Calculamos la media de ancho de banda por protocolo
 avg_bandwidth_df = df.groupBy("Protocol").agg(avg("Length").alias("AverageLength"))
 
-# Guardar el resultado como archivo CSV
+# Guardamos el resultado como archivo CSV
 avg_bandwidth_df.write.option("header", "true").csv(output_path)
 
-# Detener la sesión de Spark
+# Detenemos la sesión de Spark
 spark.stop()

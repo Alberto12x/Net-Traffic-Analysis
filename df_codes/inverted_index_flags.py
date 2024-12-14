@@ -10,32 +10,40 @@ from pyspark.sql.functions import (
 )
 import sys
 
-# Crear la sesión de Spark
-spark = SparkSession.builder.appName("ProtocolFlags").getOrCreate()
+"""
+Módulo que crea un indice invertido con los distintos flags de la columna info
+"""
 
-# Leer los argumentos
+# Creamos la sesión de Spark
+spark = SparkSession.builder.appName("ProtocolFlags").getOrCreate()
+# Establecer el nivel de log a WARN
+spark.sparkContext.setLogLevel("WARN")
+
+# Leemos los argumentos
 input_path = sys.argv[1]
 output_path = sys.argv[2]
 
-# Leer el archivo CSV en un DataFrame
+# Leemos el archivo CSV
 df = spark.read.csv(input_path, header=True, inferSchema=True)
 
-# Renombrar la columna 'No.' para evitar problemas
+# Renombramos la columna 'No.' para evitar problemas ya que el . lo identifica como entero
 df = df.withColumnRenamed("No.", "PacketID")
 
-# Extraer las palabras clave de los paquetes TCP (banderas como SYN, ACK, etc.)
-tcp_flags = {"syn", "ack", "rst", "fin", "psh", "urg"}
-
+# Obtenemos los flagas tcp
 tcp_df = (
     df.filter(col("Protocol") == "TCP")
-    .withColumn("BracketContent", regexp_extract(col("Info"), r"\[([^\]]+)\]", 0))  # Extraer contenido de corchetes
-    .filter(col("BracketContent") != "")  # Filtrar filas donde no hay corchetes
-    .select(col("PacketID"), col("BracketContent").alias("Word"))  # Renombrar columna como "Word"
+    .withColumn(
+        "BracketContent", regexp_extract(col("Info"), r"\[([^\]]+)\]", 0)
+    )  # Extraemos contenido de corchetes
+    .filter(col("BracketContent") != "")  # Filtramos filas donde no hay corchetes
+    .select(
+        col("PacketID"), col("BracketContent").alias("Word")
+    )  # Renombramos columna como "Word"
 )
 
 # Extraer métodos HTTP (GET, POST)
 http_methods = {"get", "post"}
-
+# Obtenemos el metodo usado en el mensaje HTTP
 http_df = (
     df.filter(col("Protocol") == "HTTP")
     .withColumn("Words", split(col("Info"), "\\s+"))
@@ -45,30 +53,28 @@ http_df = (
     .select("PacketID", "Word")
 )
 
-# Extraer eventos TLS (Client Hello, Server Hello)
-tls_events = {"client hello", "server hello"}
-
+# Obtenemos los distintos mensaje de la familia de protocolos TLS
 tls_df = (
     df.filter(col("Protocol").startswith("TLS"))
     .withColumn("Word", col("Info"))  # Renombrar contenido directamente a "Word"
     .select("PacketID", "Word")
 )
 
-# Unir todos los DataFrames (TCP, HTTP y TLS) en uno solo
+# Unimos todos los DataFrames (TCP, HTTP y TLS) en uno solo
 combined_df = tcp_df.union(http_df).union(tls_df)
 
-# Construir el índice invertido: mapear palabras a los identificadores de paquetes
+# Construimos el índice invertido: mapear palabras a los identificadores de paquetes
 inverted_index_df = combined_df.groupBy("Word").agg(
     collect_list("PacketID").alias("PacketIDs")
 )
 
-# Convertir la columna PacketIDs en un String
+# Convertimos la columna PacketIDs en un String para poder introducirlo en un archivo CSV
 inverted_index_df = inverted_index_df.withColumn(
     "PacketIDs", concat_ws(",", col("PacketIDs"))
 )
 
-# Guardar el índice invertido como archivo CSV
+# Guardamos el índice invertido como archivo CSV
 inverted_index_df.write.option("header", "true").csv(output_path)
 
-# Detener la sesión de Spark
+# Detenemos la sesión de Spark
 spark.stop()

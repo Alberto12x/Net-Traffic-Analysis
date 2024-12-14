@@ -19,6 +19,7 @@ Proyecto final de la asignatura de Cloud y Big Data de la Universidad Complutens
     - [Description of the application, programming model(s), platform and infrastructure](#description-of-the-application-programming-models-platform-and-infrastructure)
     - [Diseño del software (diseño arquitectónico, base del código, dependencias…)](#diseño-del-software-diseño-arquitectónico-base-del-código-dependencias)
     - [Uso (incluyendo capturas de pantalla que demuestren su funcionamiento)](#uso-incluyendo-capturas-de-pantalla-que-demuestren-su-funcionamiento)
+      - [Uso fuera de la insfractuctura cloud](#uso-fuera-de-la-insfractuctura-cloud)
     - [Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas](#evaluación-de-rendimiento-aceleración-en-la-nube-y-discusión-sobre-los-sobrecostes-identificados-y-optimizaciones-realizadas)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
     - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
@@ -79,7 +80,8 @@ En conclusión, el uso de tecnologías de Big Data y computación en la nube no 
 
 ### Descripción de los datos: ¿De dónde provienen? ¿Cómo se adquirieron? ¿Qué significan? ¿En qué formato están? ¿Cuánto pesan (mínimo 1 GB)?
 
-Los datos provienen de [kaggle](https://www.kaggle.com/), para se más exactos de la siguiente url : [https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory](https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory). La url además contiene más datasets con trafico de red en contextos diferentes además de la descripción de como se han obtenido cada uno de ellos.
+Se pueden descarga el dataset en este [enlace](https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory) el cual le lleva a la página donde descargarlo.
+Los datos provienen de [kaggle](https://www.kaggle.com/), del post de la siguiente url : [https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory](https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory). La url además contiene más datasets con trafico de red en contextos diferentes además de la descripción de como se han obtenido cada uno de ellos.
 El conjunto de datos utilizados en nuestro proyecto proviene de la plataforma Afreeca TV, que se recolectó a través de la aplicación PCAPdroid en un terminal móvil Samsung Galaxy A90 5G, equipado con un módem Qualcomm Snapdragon X50 5G. El tráfico fue medido mientras se visualizaban transmisiones en vivo de Afreeca TV, sin tráfico de fondo, para analizar las características específicas de este tipo de tráfico.
 
 AfreecaTV es una plataforma de transmisión en vivo y video bajo demanda que se originó en Corea del Sur. El nombre “AfreecaTV” se traduce como “Anybody can Freely Broadcast TV”, lo que refleja su enfoque en permitir a cualquier persona transmitir contenido de forma gratuita. [[1]]
@@ -88,13 +90,13 @@ Este conjunto de datos contiene información detallada de los paquetes de datos 
 
 Los datos incluyen registros de paquetes que pasan a través de la red y están organizados con las siguientes columnas:
 
-- No.: Número de secuencia del paquete.
-- Time: Timestamp del paquete, que indica la fecha y hora exacta en la que se capturó el paquete.
-- Source: Dirección IP de origen del paquete.
-- Destination: Dirección IP de destino del paquete.
-- Protocol: Protocolo de la capa de transporte utilizado (por ejemplo, TCP, HTTP).
-- Length: Longitud del paquete en bytes.
-- Info: Información adicional sobre el paquete, que puede incluir detalles sobre la conexión, como el tipo de mensaje (SYN, ACK, GET, etc.) y valores como el número de secuencia (Seq), número de acuse de recibo (Ack), tamaño de la ventana (Win), y otros parámetros del protocolo.
+- **No.**: Número de secuencia del paquete.
+- **Time**: Timestamp del paquete, que indica la fecha y hora exacta en la que se capturó el paquete.
+- **Source**: Dirección IP de origen del paquete.
+- **Destination**: Dirección IP de destino del paquete.
+- **Protocol**: Protocolo de la capa de transporte utilizado (por ejemplo, TCP, HTTP).
+- **Length**: Longitud del paquete en bytes.
+- **Info**: Información adicional sobre el paquete, que puede incluir detalles sobre la conexión, como el tipo de mensaje (SYN, ACK, GET, etc.) y valores como el número de secuencia (Seq), número de acuse de recibo (Ack), tamaño de la ventana (Win), y otros parámetros del protocolo.
   
 Ejemplo de entrada en el dataset:
 
@@ -113,7 +115,80 @@ El dataset que se ha utilizado en este proyecto pesa 1.3 GB
 
 ### Diseño del software (diseño arquitectónico, base del código, dependencias…)
 
+El diseño arquitectónico de la aplicación se basa en una arquitectura modular, donde cada componente tiene una función específica en el procesamiento de datos de red. Los principales módulos son los siguientes:
+
+- **Módulo de Cálculo de Ancho de Banda**: Este módulo calcula métricas de ancho de banda, como el total de bytes, el ancho de banda en bps, la longitud mínima, máxima y promedio de los paquetes, sobre ventanas de tiempo de un segundo.
+
+- **Módulo de Filtrado por Ancho de Banda**: Este módulo filtra los datos según un umbral de ancho de banda definido por el usuario, permitiendo seleccionar solo los paquetes que cumplen con ciertos criterios establecidos.
+
+- **Módulo de Frecuencia de Protocolos**: Este módulo calcula la frecuencia de aparición de diferentes protocolos en el tráfico de red, ayudando a identificar patrones de uso a lo largo del tiempo.
+
+- **Módulo de Índice Invertido de Paquetes**: Este módulo genera un índice invertido de los paquetes basado en las palabras clave extraídas de los campos de información de los paquetes, como las banderas TCP, eventos HTTP y TLS. Este índice permite realizar búsquedas eficientes asociando paquetes con términos o palabras clave específicas.
+
+- **Módulo de Geolocalización de IPs**: Este módulo utiliza la base de datos GeoLite2 para obtener información geográfica de las direcciones IP presentes en los paquetes, generando una lista única de países y ciudades asociadas con las direcciones IP.
+
+- ***Módulo de Promedio de Ancho de Banda por Protocolo**: Este módulo calcula el promedio de ancho de banda por cada protocolo, proporcionando una visión detallada del uso de la red por protocolo.
+
+El código está escrito en Python y se organiza en varios scripts que realizan tareas específicas dentro del flujo de trabajo general de la aplicación. Cada uno de estos scripts utiliza Apache Spark para procesar los datos en paralelo y generar resultados de manera eficiente. Además incluimos scripts para su ejecucion en local y ejecucion en clusters encargandose el script tanto de su creación como de su destruccion.
+
+En lugar de trabajar con RDDs (Resilient Distributed Datasets), el código emplea DataFrames de Apache Spark, ya que proporcionan una abstracción de alto nivel que permite realizar consultas más optimizadas y legibles. Los DataFrames ofrecen un conjunto más amplio de operaciones integradas, lo que hace que las tareas de transformación y agregación de datos sean más fáciles de implementar.
+
+A continuación se describen las principales librerías utilizadas en el proyecto y su propósito, el resto de librerias se pueden encontrar en el archivo [requeriments.txt](./requeriments.txt):
+
+- **geoip2**: Esta librería se utiliza para la geolocalización de direcciones IP, extrayendo información como país y ciudad a partir de bases de datos como GeoLite2.
+- **pyspark**: La principal librería utilizada para trabajar con Apache Spark desde Python. Proporciona las clases y funciones necesarias para trabajar con DataFrames y realizar operaciones distribuidas
+
+Ademas es necesario descargarse la base de datos [GeoLite2-City.mmdb](https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb) la cual proviene de este [repositorio de github](https://github.com/P3TERX/GeoLite.mmdb?tab=readme-ov-file). Los scripts de ejcución ya se encargan de su descarga.
+
 ### Uso (incluyendo capturas de pantalla que demuestren su funcionamiento)
+
+#### Uso fuera de la insfractuctura cloud
+
+```bash
+./script_ejecucion_local.sh <ancho de banda para el filtro> <Comparador 1 > , 0 <= > <top k> <dataset>
+```
+
+```bash
+/script_ejecucion_local.sh  -h
+```
+
+Que devuelve
+
+```shell
+Uso: ./script_ejecucion_local.sh <opciones>
+
+Opciones:
+  -h, --help                   Muestra este mensaje de ayuda.
+  <ancho de banda para el filtro> <Comparador 1 > , 0 <= > <top k> <dataset>
+    - <ancho de banda para el filtro> es el valor límite de ancho de banda.
+    - <Comparador> es el tipo de comparador para el filtro. Puede ser 1 o 0 siendo > y <= respectivamente.
+    - <top k> es el valor k para el filtro Top-K.
+    - <dataset> es la ubicación del archivo de datos para procesar.
+```
+
+Ejemplos :
+
+```bash
+./script_ejecucion_local.sh 22222 1 10 test.csv
+```
+
+```bash
+./script_ejecucion_local.sh 345546546 0 1000 Afreeca.csv
+```
+
+La ejecución de alguno de los dos ejemplos anteriores genera la siguiente carpeta:
+
+![Imagen de la estructura de outputs](./imagenes/estructura_outputs.png)
+
+Con un contenido similar en cada directorio:
+
+![Imagen del contenido de outputs](./imagenes/contenido_outputs.png)
+
+#### Maquina local en el cloud
+
+#### Cluster
+
+#### Archivos outputs
 
 ### Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas
 
