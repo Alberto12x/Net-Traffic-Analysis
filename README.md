@@ -5,6 +5,7 @@ Proyecto final de la asignatura de Cloud y Big Data de la Universidad Complutens
 ## Índice
 
 - [Group9-Cloud-Big-Data](#group9-cloud-big-data)
+  - [Índice](#índice)
   - [Participantes](#participantes)
   - [Informe del Proyecto](#informe-del-proyecto)
     - [Descripción del problema](#descripción-del-problema)
@@ -178,13 +179,25 @@ Ejemplos :
 ./script_ejecucion_local.sh 345546546 0 1000 Afreeca.csv
 ```
 
-La ejecución de alguno de los dos ejemplos anteriores genera la siguiente carpeta:
+La ejecución de alguno de los dos ejemplos anteriores genera el siguiente directorio:
 
 ![Imagen de la estructura de outputs](./imagenes/estructura_outputs.png)
 
 Con un contenido similar en cada directorio:
 
 ![Imagen del contenido de outputs](./imagenes/contenido_outputs.png)
+
+Capturas de pantalla del uso:
+
+![Imagen de mensajes de ayuda](./imagenes/help_local.png)
+
+Mensajes de ayuda
+
+![Funcionamiento 1 ](./imagenes/local1.png)
+![Funcionamiento 2 ](./imagenes/local2.png)
+![Funcionamiento 2 ](./imagenes/local3.png)
+
+Funcionamiento
 
 #### Maquina local en el cloud
 
