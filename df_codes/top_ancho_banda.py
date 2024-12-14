@@ -2,18 +2,24 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
 import sys
 
-# Crear la sesión de Spark
-spark = SparkSession.builder.appName("Top K Seconds by Bandwidth").getOrCreate()
+"""
+Módulo que devuelve un CSV con las k ventanas temporales de 1 segundo con mayor ancho de banda, se asume que se le pasa la salida de 
+ancho_banda.py
+"""
 
-# Leer los argumentos de entrada y salida
+# Creamos la sesion de spark y ajustamos el nivel del logger a WARN
+spark = SparkSession.builder.appName("Top K Seconds by Bandwidth").getOrCreate()
+spark.sparkContext.setLogLevel("WARN")
+
+# Leemos los argumentos de entrada y salida
 input_path = sys.argv[1]
 output = sys.argv[2]
 k = int(sys.argv[3])  # El valor de k para el top K
 
-# Leer todos los archivos CSV del directorio usando glob pattern
+# Leemos todos los archivos CSV del directorio
 df = spark.read.csv(input_path, header=True, inferSchema=True)
 
-# Seleccionar las columnas relevantes y ordenar por ancho de banda en orden descendente
+# Seleccionamos las columnas relevantes y ordenar por ancho de banda en orden descendente
 top_k_df = (
     df.select(
         col("start_time"), col("end_time"), col("TotalBytes"), col("Bandwidth_bps")
@@ -22,8 +28,8 @@ top_k_df = (
     .limit(k)
 )
 
-# Guardar el resultado como archivo CSV
+# Guardamos el resultado como archivo CSV
 top_k_df.write.option("header", "true").csv(output)
 
-# Detener la sesión de Spark
+# Detenemos la sesión de Spark
 spark.stop()

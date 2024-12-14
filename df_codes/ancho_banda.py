@@ -11,26 +11,29 @@ from pyspark.sql.functions import (
 import sys
 
 """
+Mṕdulo que calcula el ancho de banda en bits por segundo, agrupa los paquetes en ventanas de 1 segundo, además de los paquete en esa ventana temporal se calcula
+el paquete con menor longitud, mayor longitud,cantidad de paquetes, total de bytes y media de bits.
 """
 
-# Crear la sesión de Spark
+# Creamos la sesion de spark y ajustamos el nivel del logger a WARN
 spark = SparkSession.builder.appName("Ancho_de_banda").getOrCreate()
+spark.sparkContext.setLogLevel("WARN")
 
-# Leer los argumentos de entrada y salida
+# Leemos los argumentos de entrada y salida
 input = sys.argv[1]
 output = sys.argv[2]
 
-# Leer el CSV
+# Leemos el CSV
 df = spark.read.csv(input, header=True, inferSchema=True)
 
-# Convertir la columna Time a timestamp y Length a entero
+# Casteamos las columnas necesarias
 df = df.withColumn("Time", col("Time").cast("timestamp")).withColumn(
     "Length", col("Length").cast("integer")
 )
 
-# Calcular métricas por ventana de 1 segundo
+# Calculamos métricas por ventana de 1 segundo
 bandwidth_df = (
-    df.groupBy(window(col("Time"), "1 second"))
+    df.groupBy(window(col("Time"), "1 second"))  # Agrupamos por ventana de 1 segundo
     .agg(
         _sum("Length").alias("TotalBytes"),
         _min("Length").alias("MinLength"),
@@ -41,7 +44,7 @@ bandwidth_df = (
     .withColumn("Bandwidth_bps", col("TotalBytes") * 8)
 )
 
-# Seleccionar columnas relevantes
+# Seleccionarmos columnas relevantes
 result = bandwidth_df.select(
     col("window.start").alias("start_time"),
     col("window.end").alias("end_time"),
@@ -51,10 +54,12 @@ result = bandwidth_df.select(
     "MaxLength",
     "PacketCount",
     "AvgLength",
-).orderBy("start_time")
+).orderBy(
+    "start_time"
+)  # Ordenamos por orden ascendente por la fecha de inicio de la ventana
 
-# Guardar el resultado como CSV con los nombres de las columnas
+# Guardamos el resultado como CSV incl
 result.write.option("header", "true").option("quote", "").csv(output)
 
-# Detener la sesión de Spark
+# Detenemos la sesión de Spark
 spark.stop()

@@ -2,20 +2,25 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
 import sys
 
-# Crear la sesión de Spark
+"""
+Módulo que filtra el ancho de banda en la ventan de 1 segundo segun un umbra recibido por argumento y un comparador recibido por argumento. Se asume que el
+archivo de entrada es el output de ancho_banda.py
+"""
+# Creamos la sesion de spark y ajustamos el nivel del logger a WARN
 spark = SparkSession.builder.appName("Filter Bandwidth").getOrCreate()
+spark.sparkContext.setLogLevel("WARN")
 
-# Leer los argumentos de entrada
-input_path = sys.argv[1]  # Archivo CSV de entrada
-output_path = sys.argv[2]  # Carpeta de salida
+# Leemos los argumentos de entrada
+input_path = sys.argv[1]
+output_path = sys.argv[2]
 threshold = int(sys.argv[3])  # Ancho de banda mínimo
 comparador = int(sys.argv[4])  # comparador
 
 
-# Leer el archivo CSV
+# Leemos el archivo CSV
 df = spark.read.csv(input_path, header=True, inferSchema=True)
 
-# Filtrar los registros donde Bandwidth_bps es mayor que el umbral
+# Filtramos los registros donde Bandwidth_bps es mayor que el umbral
 filtered_df = (
     df.filter(col("Bandwidth_bps") > threshold)
     if comparador == 0
@@ -23,8 +28,8 @@ filtered_df = (
 )
 
 
-# Guardar el resultado como archivo CSV
+# Guardamos el resultado como archivo CSV
 filtered_df.write.option("header", "true").csv(output_path)
 
-# Detener la sesión de Spark
+# Detenemos la sesión de Spark
 spark.stop()
