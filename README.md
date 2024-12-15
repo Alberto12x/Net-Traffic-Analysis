@@ -114,7 +114,59 @@ El dataset que se ha utilizado en este proyecto pesa 1.3 GB, este tamaño ha hec
 
 ![Imagen del peso del dataset](./imagenes/peso_dataset.png)
 
-### Description of the application, programming model(s), platform and infrastructure
+### Descripción Breve de la Aplicación, Modelos de Programación, Plataforma e Infraestructura
+
+**Descripción de la Aplicación**  
+El proyecto es un sistema modular diseñado para analizar y procesar grandes conjuntos de datos de tráfico de red de manera eficiente. Sus principales objetivos son extraer información relevante, detectar patrones, identificar anomalías y apoyar en la gestión de infraestructuras de red. Aprovechando tecnologías de Big Data y computación en la nube, el sistema maneja gigabytes de datos de red almacenados en formato CSV. La aplicación incluye funcionalidades como el cálculo de métricas de ancho de banda, análisis de frecuencias de protocolos, índices invertidos para búsquedas más rápidas y geolocalización de direcciones IP. Está diseñada para garantizar escalabilidad y optimización del rendimiento.
+
+---
+
+**Modelos de Programación**  
+El proyecto se basa en **Apache Spark**, un framework de computación distribuida, para procesar datos en paralelo. Utiliza **DataFrames** como abstracción principal para el procesamiento de datos, lo que aporta varias ventajas:
+- **Lenguaje de Consultas de Alto Nivel**: Los DataFrames permiten realizar operaciones similares a SQL, simplificando las transformaciones complejas.
+- **Ejecución Optimizada**: El optimizador Catalyst de Spark mejora el rendimiento generando planes de ejecución eficientes.
+- **Computación Distribuida**: Las tareas se distribuyen entre nodos, habilitando el paralelismo.
+
+Herramientas y bibliotecas clave utilizadas:
+1. **PySpark**: Facilita la interacción con Spark desde Python.
+2. **GeoIP2**: Proporciona capacidades de geolocalización de IPs.
+3. **Python**: Es el lenguaje principal para la manipulación de datos y la orquestación.
+
+Los scripts incluyen:
+
+  - Análisis de Ancho de Banda: Agrega métricas de tráfico en ventanas de 1 segundo.
+  - Frecuencia de Protocolos: Calcula la frecuencia de uso de diferentes protocolos.
+  - Índice Invertido: Mapea términos como flags TCP y métodos HTTP a paquetes asociados.
+  - Geolocalización: Extrae información geográfica de direcciones IP únicas utilizando la base de datos GeoLite2.
+
+El modelo de programación sigue el paradigma **MapReduce**, ya que Spark procesa los datos mediante transformaciones de mapeo y reduce los resultados en un entorno distribuido.
+
+---
+
+**Plataforma**  
+La aplicación puede ejecutarse en:
+1. **Entorno Local**: Usando un entorno virtual de Python para pruebas a pequeña escala.
+2. **Infraestructura en la Nube**: El proyecto utiliza **Google Cloud Platform (GCP)** con instancias de máquinas virtuales para computación distribuida. Los scripts gestionan automáticamente la provisión y liberación de recursos, optimizando costes y uso.
+
+---
+
+**Infraestructura**  
+La infraestructura combina los siguientes elementos:
+1. **Recursos de Cómputo**:
+   - **Máquinas Virtuales**: Instancias personalizables creadas dinámicamente en GCP para soportar tareas distribuidas con Spark.
+   - **Configuración Local**: Entornos virtuales en Python 3.12 con dependencias instaladas desde requirements.txt. Los conjuntos de datos y los resultados se gestionan localmente para cargas de trabajo menores o pruebas.
+2. **Almacenamiento**:
+   - **Sistema de Archivos Distribuido**: Spark procesa entradas desde almacenamiento de objetos en la nube (por ejemplo, GCP Cloud Storage).
+   - **Almacenamiento Local**: Usado para resultados intermedios durante pruebas locales.
+3. **Redes**:
+   - El conjunto de datos incluye campos relacionados con IPs, permitiendo simulaciones de optimización y enrutamiento de redes.
+   - La transferencia de datos dentro de GCP optimiza costes mediante su red interna.
+4. **Seguridad**:
+   - Asegurada mediante políticas de IAM (Gestión de Identidades y Accesos).
+   - El acceso a la base de datos GeoLite2 y a los conjuntos de datos está restringido a procesos autorizados.
+
+
+
 
 ### Diseño del software (diseño arquitectónico, base del código, dependencias…)
 
