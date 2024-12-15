@@ -46,11 +46,6 @@ fi
 CLUSTER_NAME="cluster-spark"
 REGION="europe-southwest1"
 
-# Crear un paquete ZIP con dependencias
-echo -e "${GREEN}Preparando dependencias para el clúster...${RESET}"
-pip install -r requiriments.txt --target ./package
-cd package && zip -r dependencies.zip . && cd ..
-
 # Crear el clúster en GCP
 echo -e "${GREEN}Creando el clúster en GCP...${RESET}"
 start_time_total=$(date +%s)  # Medir el tiempo total de todas las tareas
@@ -67,65 +62,77 @@ gcloud dataproc clusters create $CLUSTER_NAME \
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de creación del clúster: $((end_time - start_time)) segundos.${RESET}"
 
-# Ejecutar trabajos de Spark
+# Ejecutar trabajos de Spark con los recursos máximos
 echo -e "${GREEN}Ejecutando programas de Python en el clúster de GCP...${RESET}"
 
+echo -e "${GREEN}Ejecutando Ancho_banda.py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/ancho_banda.py \
-    --cluster=$CLUSTER_NAME\
-    --region=$REGION\
+    --cluster=$CLUSTER_NAME \
+    --region=$REGION \
+    --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
     -- \
     $DATASET \
-    $OUTPUT_DIR/ouput_anchobanda
+    $OUTPUT_DIR/output_anchobanda
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de ejecución de 'ancho_banda.py': $((end_time - start_time)) segundos.${RESET}"
 
+echo -e "${GREEN}Ejecutando frecuencia_protocolos.py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/frecuencias_protocolos.py \
-    --cluster=$CLUSTER_NAME\
-    --region=$REGION\
+    --cluster=$CLUSTER_NAME \
+    --region=$REGION \
+    --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
     -- \
     $DATASET \
     $OUTPUT_DIR/output_frecuencia_protocolos
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de ejecución de 'frecuencias_protocolos.py': $((end_time - start_time)) segundos.${RESET}"
 
+echo -e "${GREEN}Ejecutando inverted_index_flags.py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/inverted_index_flags.py \
-    --cluster=$CLUSTER_NAME\
-    --region=$REGION\
+    --cluster=$CLUSTER_NAME \
+    --region=$REGION \
+    --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
     -- \
     $DATASET \
     $OUTPUT_DIR/output_inverted_index
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de ejecución de 'inverted_index_flags.py': $((end_time - start_time)) segundos.${RESET}"
 
+echo -e "${GREEN}Ejecutando media_ancho_banda_protocolo.py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/media_ancho_banda_protocolo.py \
-    --cluster=$CLUSTER_NAME\
-    --region=$REGION\
+    --cluster=$CLUSTER_NAME \
+    --region=$REGION \
+    --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
     -- \
     $DATASET \
     $OUTPUT_DIR/output_media_anchobanda_protocolos
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de ejecución de 'media_ancho_banda_protocolo.py': $((end_time - start_time)) segundos.${RESET}"
 
+echo -e "${GREEN}Ejecutando filtro_ancho_banda.py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/filtro_ancho_banda.py \
-    --cluster=$CLUSTER_NAME\
-    --region=$REGION\
+    --cluster=$CLUSTER_NAME \
+    --region=$REGION \
+    --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
     -- \
     $OUTPUT_DIR/output_anchobanda \
-    $OUTPUT_DIR/output_media_anchobanda_protocolos \
+    $OUTPUT_DIR/filtro_ancho_banda \
     $FILTER_BANDWIDTH \
     $COMPARATOR
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de ejecución de 'filtro_ancho_banda.py': $((end_time - start_time)) segundos.${RESET}"
 
+echo -e "${GREEN}Ejecutando top_ancho_banda.py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/top_ancho_banda.py \
-    --cluster=$CLUSTER_NAME\
-    --region=$REGION\
+    --cluster=$CLUSTER_NAME \
+    --region=$REGION \
+    --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
     -- \
     $OUTPUT_DIR/output_anchobanda \
     $OUTPUT_DIR/outputs_top_anchobanda \
@@ -133,10 +140,13 @@ gcloud dataproc jobs submit pyspark $BUCKET/df_codes/top_ancho_banda.py \
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de ejecución de 'top_ancho_banda.py': $((end_time - start_time)) segundos.${RESET}"
 
+echo -e "${GREEN}Ejecutando ips_ubicacion.py .py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/ips_ubicacion.py \
-    --cluster=$CLUSTER_NAME\
-    --region=$REGION\
+    --cluster=$CLUSTER_NAME \
+    --region=$REGION \
+    --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
+    --py-files $BUCKET/dependencies.zip
     -- \
     $DATASET \
     $OUTPUT_DIR/output_ip_ubicacion \

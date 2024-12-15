@@ -27,9 +27,10 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
     - [Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas](#evaluación-de-rendimiento-aceleración-en-la-nube-y-discusión-sobre-los-sobrecostes-identificados-y-optimizaciones-realizadas)
       - [**Speed-up en maquina local con distintos hilos**](#speed-up-en-maquina-local-con-distintos-hilos)
       - [**Speed-up en maquina local con distinta cantidad de vCpus**](#speed-up-en-maquina-local-con-distinta-cantidad-de-vcpus)
-      - [\*\*Speed-up en maquina local en la nube combinando hilos y vCpus](#speed-up-en-maquina-local-en-la-nube-combinando-hilos-y-vcpus)
+      - [**Speed-up en maquina local en la nube combinando hilos y vCpus**](#speed-up-en-maquina-local-en-la-nube-combinando-hilos-y-vcpus)
       - [**Speed-up en cluster con distinta cantidad de nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-nodos)
       - [**Speed-up en cluster con distinta cantidad de vCpus**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus)
+      - [**Speed-up local en GCP vs Cluster**](#speed-up-local-en-gcp-vs-cluster)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
     - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
     - [Referencias](#referencias)
@@ -400,16 +401,17 @@ Deleted [https://www.googleapis.com/compute/v1/projects/lab1cloudbigdata/zones/e
 
 #### **Cluster**
 
+
+
 #### **Archivos outputs**
 
 ---
 
 ### Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas
 
-Para calcular los speed ups se ha utlizado la siguiente formula: $Speed\text{-}up = \frac{T_{control}}{T_{modificacion}}$ definiendo la maquina de control en cada apartado
+Para calcular los speed ups se ha utlizado la siguiente formula: $Speed\text{-}up = \frac{T_{control}}{T_{modificacion}}$ teniendo la maquina de control 4 vCpus y ejecutandose con 1 hilo
 
 #### **Speed-up en maquina local con distintos hilos**
-
 
 | Hilos | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
 |-------|---------------------|-------------------------|-----------------------------|-----------------------------------|---------------------|-------------------------|---------------------------|-------------------------------|---------------------------|-----------------------------|------------------------|-------------------------|--------------------|--------------------|-------------------|----------------|
@@ -420,103 +422,32 @@ Para calcular los speed ups se ha utlizado la siguiente formula: $Speed\text{-}u
 | 5     | 36                  | 1.72                   | 37                          | 1.49                              | 65                  | 1.89                   | 36                        | 1.61                         | 11                        | 1.09                       | 12                     | 1.00                   | 48                 | 1.63                | 245               | 1.54           |
 | 6     | 38                  | 1.63                   | 38                          | 1.45                              | 69                  | 1.78                   | 35                        | 1.66                         | 12                        | 1.00                       | 12                     | 1.00                   | 51                 | 1.53                | 255               | 1.48           |
 
-
 #### **Speed-up en maquina local con distinta cantidad de vCpus**
 
-Control = 4 vCpus , 1 hilos
+| vCPUs | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
+|-------|---------------------|-------------------------|-----------------------------|-----------------------------------|---------------------|-------------------------|---------------------------|-------------------------------|---------------------------|-----------------------------|------------------------|-------------------------|--------------------|--------------------|-------------------|----------------|
+| 4     | 62                  | 1.00                   | 55                          | 1.00                              | 123                 | 1.00                   | 58                        | 1.00                         | 12                        | 1.00                       | 12                     | 1.00                   | 78                 | 1.00                | 378               | 1.00           |
+| 8     | 54                  | 1.15                   | 49                          | 1.12                              | 98                  | 1.26                   | 55                        | 1.05                         | 10                        | 1.20                       | 10                     | 1.20                   | 68                 | 1.15                | 339               | 1.12           |
+| 16    | 51                  | 1.22                   | 46                          | 1.20                              | 96                  | 1.28                   | 50                        | 1.16                         | 10                        | 1.20                       | 9                      | 1.33                   | 68                 | 1.15                | 330               | 1.14           |
 
-Ancho_banda: 62 segundos
-Frecuencia de protocolos: 55 segundos
-Inverted index: 123 segundos
-Media ancho de banda por protocolo: 58 segundos
-Filtro ancho de banda: 12 segundos
-Top ancho de banda: 12 segundos
-Ips ubicacion: 78 segundos
-Total de módulos: 378 segundos
-
-8 vCpus
-Ancho_banda: 54 segundos
-Frecuencia de protocolos: 49 segundos
-Inverted index: 98 segundos
-Media ancho de banda por protocolo: 55 segundos
-Filtro ancho de banda: 10 segundos
-Top ancho de banda: 10 segundos
-Ips ubicacion: 68 segundos
-Total de módulos: 339 segundos
-
-16 vCpus
-Ancho_banda: 62 segundos
-Frecuencia de protocolos: 55 segundos
-Inverted index: 123 segundos
-Media ancho de banda por protocolo: 58 segundos
-Filtro ancho de banda: 12 segundos
-Top ancho de banda: 12 segundos
-Ips ubicacion: 78 segundos
-Total de módulos: 378 segundos
-
-#### **Speed-up en maquina local en la nube combinando hilos y vCpus
+#### **Speed-up en maquina local en la nube combinando hilos y vCpus**
 
 No hemos dispuesto de timpoi suficiente como probar una gran combinación pero intuimos observando los speed-up anteriores que el mismo número de hilos  que de vCpus alcanza un valor de speed-up cercano al máximo alcanzable
 
-Control = 4 vCpus , 1 hilos
-
-Ancho_banda: 62 segundos
-Frecuencia de protocolos: 55 segundos
-Inverted index: 123 segundos
-Media ancho de banda por protocolo: 58 segundos
-Filtro ancho de banda: 12 segundos
-Top ancho de banda: 12 segundos
-Ips ubicacion: 78 segundos
-Total de módulos: 378 segundos
-
-8 vCpus, 2 hilos
-
-Ancho_banda: 38 segundos
-Frecuencia de protocolos: 36 segundos
-Inverted index: 65 segundos
-Media ancho de banda por protocolo: 36 segundos
-Filtro ancho de banda: 10 segundos
-Top ancho de banda: 10 segundos
-Ips ubicacion: 42 segundos
-Total de módulos: 237 segundos
-
-8 vCpus, 8 hilos
-
-Ancho_banda: 26 segundos
-Frecuencia de protocolos: 23 segundos
-Inverted index: 41 segundos
-Media ancho de banda por protocolo: 23 segundos
-Filtro ancho de banda: 11 segundos
-Top ancho de banda: 10 segundos
-Ips ubicacion: 32 segundos
-Total de módulos: 166 segundos
-
-16 vCpus, 2 hilos
-
-Ancho_banda: 62 segundos
-Frecuencia de protocolos: 55 segundos
-Inverted index: 123 segundos
-Media ancho de banda por protocolo: 58 segundos
-Filtro ancho de banda: 12 segundos
-Top ancho de banda: 12 segundos
-Ips ubicacion: 78 segundos
-Total de módulos: 378 segundos
-
-16 vCpus, 16 hilos
-
-Ancho_banda: 62 segundos
-Frecuencia de protocolos: 55 segundos
-Inverted index: 123 segundos
-Media ancho de banda por protocolo: 58 segundos
-Filtro ancho de banda: 12 segundos
-Top ancho de banda: 12 segundos
-Ips ubicacion: 78 segundos
-Total de módulos: 378 segundos
-
+| vCPUs | Hilos | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
+|-------|-------|---------------------|-------------------------|-----------------------------|-----------------------------------|---------------------|-------------------------|---------------------------|-------------------------------|---------------------------|-----------------------------|------------------------|-------------------------|--------------------|--------------------|-------------------|----------------|
+| 4     | 1     | 62                  | 1.00                    | 55                          | 1.00                              | 123                 | 1.00                    | 58                        | 1.00                         | 12                        | 1.00                        | 12                     | 1.00                   | 78                 | 1.00                | 378               | 1.00           |
+| 8     | 2     | 38                  | 1.63                    | 36                          | 1.53                              | 65                  | 1.89                    | 36                        | 1.61                         | 10                        | 1.20                        | 10                     | 1.20                   | 42                 | 1.86                | 237               | 1.59           |
+| 8     | 8     | 26                  | 2.38                    | 23                          | 2.39                              | 41                  | 3.00                    | 23                        | 2.52                         | 11                        | 1.09                        | 10                     | 1.20                   | 32                 | 2.44                | 166               | 2.28           |
+| 16    | 2     | 37                  | 1.68                    | 31                          | 1.77                              | 58                  | 2.12                    | 31                        | 1.87                         | 10                        | 1.20                        | 10                     | 1.20                   | 40                 | 1.95                | 217               | 1.74           |
+| 16    | 16    | 19                  | 3.26                    | 17                          | 3.24                              | 27                  | 4.56                    | 17                        | 3.41                         | 10                        | 1.20                        | 10                     | 1.20                   | 21                 | 3.71                | 121               | 3.13           |
 
 #### **Speed-up en cluster con distinta cantidad de nodos**
+Control  4 nodos 4 vCpus
 
 #### **Speed-up en cluster con distinta cantidad de vCpus**
+
+#### **Speed-up local en GCP vs Cluster**
 
 ---
 
