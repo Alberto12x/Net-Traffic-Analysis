@@ -41,7 +41,11 @@ if [[ -z "$NUM_THREADS" ]]; then
     NUM_THREADS=1
 fi
 
-# Crear directorio de salida si no existe
+# Crear directorio de salida si no existe, o borrarlo si ya existe
+if [[ -d "$OUTPUT_DIR" ]]; then
+    echo -e "${GREEN}El directorio de salida ya existe. Borrándolo...${RESET}"
+    rm -rf "$OUTPUT_DIR"
+fi
 mkdir -p "$OUTPUT_DIR"
 
 # Variable para almacenar el tiempo total
@@ -68,6 +72,7 @@ run_spark_submit() {
     # Acumular el tiempo total
     TOTAL_TIME=$((TOTAL_TIME + EXECUTION_TIME))
 }
+
 # Activar el entorno virtual e instalar dependencias
 source /opt/virtualenvs/spark_env/bin/activate
 
