@@ -68,6 +68,8 @@ run_spark_submit() {
     # Acumular el tiempo total
     TOTAL_TIME=$((TOTAL_TIME + EXECUTION_TIME))
 }
+# Activar el entorno virtual e instalar dependencias
+source /opt/virtualenvs/spark_env/bin/activate
 
 # Ejecutar scripts con spark-submit y calcular tiempo
 echo -e "${GREEN}Ejecutando programas de Python dentro del entorno Spark con $NUM_THREADS hilos...${RESET}"
@@ -84,3 +86,5 @@ run_spark_submit "df_codes/ips_ubicacion.py" $DATASET "$OUTPUT_DIR/output_ip_ubi
 echo -e "${GREEN}Tiempo total de ejecución: $TOTAL_TIME segundos.${RESET}"
 
 echo -e "${GREEN}Ejecución completa.${RESET}"
+
+deactivate
