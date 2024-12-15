@@ -2,6 +2,7 @@
 
 # Colores para salida en consola
 GREEN='\033[0;32m'
+RED='\033[0;31m'
 RESET='\033[0m'
 
 # Función para mostrar la ayuda
@@ -9,8 +10,8 @@ show_help() {
     echo -e "${GREEN}Uso: $0 <ruta_dataset> <output_dir> <bucket> <master_vcpus> <worker_vcpus> <num_workers> [filter_bandwidth] [comparator] [top_k]${RESET}"
     echo -e "${GREEN}Parámetros:${RESET}"
     echo -e "  <ruta_dataset>       Ruta al dataset a procesar"
-    echo -e "  <output_dir>         Directorio (bucket) donde se guardarán los resultados"
-    echo -e "  <bucket>             Bucket que contiene lso codigos a ejecutar"
+    echo -e "  <output_dir>         Directorio (bucket) donde se guardarán los resultados, es necesario que la ruta no exista"
+    echo -e "  <bucket>             Bucket que contiene los códigos a ejecutar"
     echo -e "  <master_vcpus>       Número de vCPUs para el nodo maestro"
     echo -e "  <worker_vcpus>       Número de vCPUs para los nodos trabajadores"
     echo -e "  <num_workers>        Número de nodos trabajadores"
@@ -39,6 +40,12 @@ fi
 
 if [[ -z "$DATASET" || -z "$OUTPUT_DIR" || -z "$MASTER_VCPUS" || -z "$WORKER_VCPUS" || -z "$NUM_WORKERS" ]]; then
     echo -e "${GREEN}Uso: $0 <ruta_dataset> <output_dir> <master_vcpus> <worker_vcpus> <num_workers> [filter_bandwidth] [comparator] [top_k]${RESET}"
+    exit 1
+fi
+
+# Comprobación de que la ruta de salida no exista
+if gsutil -q stat "$OUTPUT_DIR/**"; then
+    echo -e "${RED}Error: La ruta de salida '$OUTPUT_DIR' ya existe. Por favor, especifique una ruta diferente.${RESET}"
     exit 1
 fi
 
@@ -140,13 +147,13 @@ gcloud dataproc jobs submit pyspark $BUCKET/df_codes/top_ancho_banda.py \
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de ejecución de 'top_ancho_banda.py': $((end_time - start_time)) segundos.${RESET}"
 
-echo -e "${GREEN}Ejecutando ips_ubicacion.py .py${RESET}"
+echo -e "${GREEN}Ejecutando ips_ubicacion.py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/ips_ubicacion.py \
     --cluster=$CLUSTER_NAME \
     --region=$REGION \
     --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
-    --py-files $BUCKET/dependencies.zip
+    --py-files $BUCKET/dependencies.zip \
     -- \
     $DATASET \
     $OUTPUT_DIR/output_ip_ubicacion \

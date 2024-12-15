@@ -30,6 +30,7 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
       - [**Speed-up en maquina local en la nube combinando hilos y vCpus**](#speed-up-en-maquina-local-en-la-nube-combinando-hilos-y-vcpus)
       - [**Speed-up en cluster con distinta cantidad de nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-nodos)
       - [**Speed-up en cluster con distinta cantidad de vCpus**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus)
+      - [**Speed-up en cluster con distinta cantidad de vCpus y nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus-y-nodos)
       - [**Speed-up local en GCP vs Cluster**](#speed-up-local-en-gcp-vs-cluster)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
     - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
@@ -401,7 +402,170 @@ Deleted [https://www.googleapis.com/compute/v1/projects/lab1cloudbigdata/zones/e
 
 #### **Cluster**
 
+Para su ejecucion es necesario un bucket con este contenido, si el bucket contiene el contenido de este repositorio funciona:
+
+![contenido_bucket](./imagenes/contenido_bucktet1.png)
+
+![contenido_bucket](./imagenes/contenido_bucktet2.png)
+
+![contenido_bucket](./imagenes/contenido_bucktet3.png)
+
+El script se ocupa tanto de la creación, ejecución y eliminación del cluster:
+
+```bash
+./script_cluster.sh -h
+```
+
+Salida:
+
+```bash
+Uso: ./script_cluster.sh <ruta_dataset> <output_dir> <bucket> <master_vcpus> <worker_vcpus> <num_workers> [filter_bandwidth] [comparator] [top_k]
+Parámetros:
+  <ruta_dataset>       Ruta al dataset a procesar
+  <output_dir>         Directorio (bucket) donde se guardarán los resultados, es necesario que la ruta no exista
+  <bucket>             Bucket que contiene los códigos a ejecutar
+  <master_vcpus>       Número de vCPUs para el nodo maestro
+  <worker_vcpus>       Número de vCPUs para los nodos trabajadores
+  <num_workers>        Número de nodos trabajadores
+  [filter_bandwidth]   (Opcional) Ancho de banda para el filtro
+  [comparator]         (Opcional) Comparador para el filtro
+  [top_k]              (Opcional) Valor k para el top k
+  -h                   Mostrar este mensaje de ayuda
+```
+
+Ejemplo de ejecución, $BUCKET contiene la dirección de un bucket (gs://...):
+
+```bash
+./script_cluster.sh $BUCKET/dataset/AfreecaTV.csv $BUCKET/output9/ $BUCKET 4 4 2 121212 0 12
+```
+
+Salida:
+
+![GCP_cluster1](./imagenes/GCP_cluster1.png)
+
+![GCP_cluster2](./imagenes/GCP_cluster2.png)
+
+![GCP_cluster3](./imagenes/GCP_cluster3.png)
+
+![GCP_cluster4](./imagenes/GCP_cluster4.png)
+
+![GCP_cluster5](./imagenes/GCP_cluster5.png)
+
+![GCP_cluster6](./imagenes/GCP_cluster6.png)
+
+![GCP_cluster7](./imagenes/GCP_cluster7.png)
+
+![GCP_cluster8](./imagenes/GCP_cluster8.png)
+
+Generando el directorio en el output pasado:
+
+![GCP_cluster_salida](./imagenes/GCP_cluster_salida.png)
+
 #### **Archivos outputs**
+
+Todos los outputs son archivos csv con el formato descrito a continuación, además Output_frecuencia_protocolos, Output_ip_ubicación, Output_media_anchobanda_protocolo, Output_top_anchobanda son el resultado completo de la ejecución , el resto es solo parcial:
+
+Output_anchobanda:
+
+| Start Time                      | End Time                        | Total Bytes | Bandwidth (bps) | Min Length | Max Length | Packet Count | Avg Length       |
+|---------------------------------|----------------------------------|-------------|-----------------|------------|------------|--------------|------------------|
+| 2022-06-01T11:32:29.000+02:00  | 2022-06-01T11:32:30.000+02:00   | 148         | 1184            | 40         | 60         | 3            | 49.333333333333336 |
+| 2022-06-01T11:32:30.000+02:00  | 2022-06-01T11:32:31.000+02:00   | 60          | 480             | 60         | 60         | 1            | 60.0             |
+| 2022-06-01T11:32:31.000+02:00  | 2022-06-01T11:32:32.000+02:00   | 360         | 2880            | 40         | 172        | 5            | 72.0             |
+| 2022-06-01T11:32:32.000+02:00  | 2022-06-01T11:32:33.000+02:00   | 60          | 480             | 60         | 60         | 1            | 60.0             |
+| 2022-06-01T11:32:34.000+02:00  | 2022-06-01T11:32:35.000+02:00   | 305         | 2440            | 40         | 185        | 4            | 76.25            |
+| 2022-06-01T11:32:35.000+02:00  | 2022-06-01T11:32:36.000+02:00   | 861708      | 6893664         | 40         | 1500       | 1124         | 766.644128113879 |
+| 2022-06-01T11:32:36.000+02:00  | 2022-06-01T11:32:37.000+02:00   | 1735636     | 13885088        | 40         | 1500       | 1856         | 935.1487068965517 |
+| 2022-06-01T11:32:37.000+02:00  | 2022-06-01T11:32:38.000+02:00   | 237404      | 1899232         | 40         | 1500       | 332          | 715.0722891566265 |
+| 2022-06-01T11:32:38.000+02:00  | 2022-06-01T11:32:39.000+02:00   | 320238      | 2561904         | 40         | 1500       | 482          | 664.3941908713693 |
+| 2022-06-01T11:32:39.000+02:00  | 2022-06-01T11:32:40.000+02:00   | 491554      | 3932432         | 40         | 1500       | 651          | 755.0752688172043 |
+| 2022-06-01T11:32:40.000+02:00  | 2022-06-01T11:32:41.000+02:00   | 107552      | 860416          | 40         | 1500       | 158          | 680.7088607594936 |
+| 2022-06-01T11:32:41.000+02:00  | 2022-06-01T11:32:42.000+02:00   | 326070      | 2608560         | 40         | 1500       | 448          | 727.8348214285714 |
+| 2022-06-01T11:32:42.000+02:00  | 2022-06-01T11:32:43.000+02:00   | 378062      | 3024496         | 40         | 1500       | 393          | 961.9898218829517 |
+| 2022-06-01T11:32:43.000+02:00  | 2022-06-01T11:32:44.000+02:00   | 259266      | 2074128         | 40         | 1500       | 269          | 963.8141263940521 |
+
+Output_frecuencia_protocolos:
+
+| Protocol   | Frequency  |
+|------------|------------|
+| TCP        | 7317683    |
+| TLSv1.2    | 118        |
+| TLSv1.3    | 100        |
+| HTTP       | 30         |
+| THRIFT     | 7          |
+
+Output_inverted_index:
+
+| Protocol                        | Indices                                                                                                                                                                                                 |
+|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [RST, ACK]                     | 1206,3805,3808,22197,25499,25500,25501,27116,38466,43953,359436,7316554,7317890,7317892,7317913,7317928                                                         |
+| [SYN]                          | 1,4,9,24,25,27,35,88,102,110,114,123,124,152,201,266,471,485,486,1472,2647,2650,3647,3713,3714,3715,17037,25540,290032,290034,291012,291014,291264,291265,359950,7316475,7317641,7317740,7317756,7317764,7317765,7317766,7317767,7317779,7317844 |
+| [TCP Retransmission]           | 14,2648,5968                                                                                                                                                                                           |
+| [SYN, ACK]                     | 2,10,28,33,39,54,89,106,127,133,139,145,176,234,336,487,514,521,1687,2651,2655,3648,3716,3720,3722,17047,25541,290035,290044,291015,291019,291268,291273,359966,7316476,7317642,7317741,7317757,7317775,7317782,7317784,7317790,7317794,7317897 |
+| get                            | 12,141,181,359970,7316478,7317644,7317743                                                                                                                                                               |
+| post                           | 42,91,135,148,2653,2661,3652,7317906                                                                                                                                                                   |
+| Application Data               | 46,52,70,150,664,735,3734,3740,3759,3760,3774,3780,3791,3800,3803,3806,14849,15372,15374,17080,290170,290215,291042,291047,291300,291303,7317804,7317811,7317835,7317839,7317841,7317842,7317857,7317858,7317866,7317870,7317874,7317880,7317884,7317887,7317888,7317894,7317910 |
+| Application Data, Application Data | 58,67,771,3790,3863,3880,3898,3902,290199,291049,291305,7317817,7317820,7317825,7317827,7317861,7317862,7317868,7317886,7317893,7317925,7317966,7317990,7317993                                      |
+| Server Hello                   | 59,115,571,619,290121,290158,291024,291033,291283,291289,7317768                                                                                                                                       |
+| Encrypted Alert                | 84,183,972,1033,290240,290246,291068,291099,291322,291355                                                                                                                                             |
+
+Output_ip_ubicación:
+
+| Country         | City           |
+|-----------------|----------------|
+| South Korea     | Gimhae         |
+| South Korea     | Yuseong-gu     |
+| South Korea     | Gwangmyeong-si |
+| United States   | Kansas City    |
+| South Korea     | Mapo-gu        |
+| United States   | Unknown        |
+| South Korea     | Gyeongsangnam-do |
+| South Korea     | Gangnam-gu     |
+| South Korea     | Jongno-gu      |
+| South Korea     | Miryang        |
+| South Korea     | Hwaseong-si    |
+| South Korea     | Unknown        |
+| South Korea     | Bucheon-si     |
+| Unknown         | Unknown        |
+
+Output_media_anchobanda_protocolo:
+
+| Protocol   | Average Length       |
+|------------|-----------------------|
+| TCP        | 983.8133887461373    |
+| TLSv1.3    | 659.49               |
+| TLSv1.2    | 693.7542372881356    |
+| HTTP       | 371.96666666666664   |
+| THRIFT     | 1500.0               |
+
+Output_filtro_anchobanda:
+
+| Start Time                  | End Time                    | Total Bytes | Bandwidth (bps) | Min Length | Max Length | Packet Count | Avg Length        |
+|-----------------------------|-----------------------------|-------------|-----------------|------------|------------|--------------|-------------------|
+| 2022-06-01T11:32:29.000+02:00 | 2022-06-01T11:32:30.000+02:00 | 148         | 1184            | 40         | 60         | 3            | 49.333333333333336 |
+| 2022-06-01T11:32:30.000+02:00 | 2022-06-01T11:32:31.000+02:00 | 60          | 480             | 60         | 60         | 1            | 60.0              |
+| 2022-06-01T11:32:31.000+02:00 | 2022-06-01T11:32:32.000+02:00 | 360         | 2880            | 40         | 172        | 5            | 72.0              |
+| 2022-06-01T11:32:32.000+02:00 | 2022-06-01T11:32:33.000+02:00 | 60          | 480             | 60         | 60         | 1            | 60.0              |
+| 2022-06-01T11:32:34.000+02:00 | 2022-06-01T11:32:35.000+02:00 | 305         | 2440            | 40         | 185        | 4            | 76.25             |
+| 2022-06-01T12:30:04.000+02:00 | 2022-06-01T12:30:05.000+02:00 | 1442        | 11536           | 40         | 1402       | 2            | 721.0             |
+| 2022-06-01T18:23:26.000+02:00 | 2022-06-01T18:23:27.000+02:00 | 94          | 752             | 40         | 54         | 2            | 47.0              |
+| 2022-06-01T18:23:28.000+02:00 | 2022-06-01T18:23:29.000+02:00 | 142         | 1136            | 40         | 102        | 2            | 71.0              |
+| 2022-06-01T18:24:16.000+02:00 | 2022-06-01T18:24:17.000+02:00 | 94          | 752             | 40         | 54         | 2            | 47.0              |
+
+Output_top_anchobanda:
+
+| Start Time                  | End Time                    | Total Bytes | Bandwidth (bps) |
+|-----------------------------|-----------------------------|-------------|-----------------|
+| 2022-06-01T11:32:36.000+02:00 | 2022-06-01T11:32:37.000+02:00 | 1735636     | 13885088        |
+| 2022-06-01T13:21:44.000+02:00 | 2022-06-01T13:21:45.000+02:00 | 1236179     | 9889432         |
+| 2022-06-01T15:20:36.000+02:00 | 2022-06-01T15:20:37.000+02:00 | 1191352     | 9530816         |
+| 2022-06-01T15:35:26.000+02:00 | 2022-06-01T15:35:27.000+02:00 | 1156857     | 9254856         |
+| 2022-06-01T14:40:16.000+02:00 | 2022-06-01T14:40:17.000+02:00 | 1138308     | 9106464         |
+| 2022-06-01T14:29:16.000+02:00 | 2022-06-01T14:29:17.000+02:00 | 1122683     | 8981464         |
+| 2022-06-01T14:46:52.000+02:00 | 2022-06-01T14:46:53.000+02:00 | 1114371     | 8914968         |
+| 2022-06-01T12:26:50.000+02:00 | 2022-06-01T12:26:51.000+02:00 | 1081350     | 8650800         |
+| 2022-06-01T16:13:42.000+02:00 | 2022-06-01T16:13:43.000+02:00 | 1078664     | 8629312         |
+| 2022-06-01T11:47:45.000+02:00 | 2022-06-01T11:47:46.000+02:00 | 1034655     | 8277240         |
 
 ---
 
@@ -441,9 +605,63 @@ No hemos dispuesto de timpoi suficiente como probar una gran combinación pero i
 | 16    | 16    | 19                  | 3.26                    | 17                          | 3.24                              | 27                  | 4.56                    | 17                        | 3.41                         | 10                        | 1.20                        | 10                     | 1.20                   | 21                 | 3.71                | 121               | 3.13           |
 
 #### **Speed-up en cluster con distinta cantidad de nodos**
-Control  4 nodos 4 vCpus
+
+Control  2 nodos 4 vCpus
+
+Ancho de banda: 80 segundos
+Frecuencia protocolos: 64 segundos
+Inverted index: 85 segundos
+Media ancho por protocolo: 65 segundos
+Filtro ancho banda: 47 segundos
+Top ancho banda: 49 segundos
+Ips ubicacion: 84 segundos
+
+4 nodos 4 vCpus
+
+Ancho de banda: 69 segundos
+Frecuencia protocolos: 50 segundos
+Inverted index: 60 segundos
+Media ancho por protocolo: 50 segundos
+Filtro ancho banda: 40 segundos
+Top ancho banda: 40 segundos
+Ips ubicacion: 66 segundos
+
+5 nodos 4 vCpus
+
+Ancho de banda: 62 segundos
+Frecuencia protocolos: 48 segundos
+Inverted index: 60 segundos
+Media ancho por protocolo: 45 segundos
+Filtro ancho banda: 40 segundos
+Top ancho banda: 39 segundos
+Ips ubicacion: 62 segundos
+
+No podemos evaluar con mas porque llegamos al limite de cpus que tebemos de cuota en la zona europe-southwest1, permite 24 vcpus. Pero sabemos que hay un punto donde aumentar los nodos no mejora los tiempos debido a que e coste temporal de su comunicación supera el ahorra de distrubuir y parelelizar los datos y computos.
+
 
 #### **Speed-up en cluster con distinta cantidad de vCpus**
+
+Control  2 nodos 4 vCpus
+
+Ancho de banda: 80 segundos
+Frecuencia protocolos: 64 segundos
+Inverted index: 85 segundos
+Media ancho por protocolo: 65 segundos
+Filtro ancho banda: 47 segundos
+Top ancho banda: 49 segundos
+Ips ubicacion: 84 segundos
+
+#### **Speed-up en cluster con distinta cantidad de vCpus y nodos**
+
+Control  2 nodos 4 vCpus
+
+Ancho de banda: 80 segundos
+Frecuencia protocolos: 64 segundos
+Inverted index: 85 segundos
+Media ancho por protocolo: 65 segundos
+Filtro ancho banda: 47 segundos
+Top ancho banda: 49 segundos
+Ips ubicacion: 84 segundos
 
 #### **Speed-up local en GCP vs Cluster**
 
