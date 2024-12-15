@@ -11,7 +11,7 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
     - [Descripción del problema](#descripción-del-problema)
     - [Necesidad del procesamiento de Big Data y la computación en la nube](#necesidad-del-procesamiento-de-big-data-y-la-computación-en-la-nube)
     - [Descripción de los datos: ¿De dónde provienen? ¿Cómo se adquirieron? ¿Qué significan? ¿En qué formato están? ¿Cuánto pesan (mínimo 1 GB)?](#descripción-de-los-datos-de-dónde-provienen-cómo-se-adquirieron-qué-significan-en-qué-formato-están-cuánto-pesan-mínimo-1-gb)
-    - [Description of the application, programming model(s), platform and infrastructure](#description-of-the-application-programming-models-platform-and-infrastructure)
+    - [Descripción Breve de la Aplicación, Modelos de Programación, Plataforma e Infraestructura](#descripción-breve-de-la-aplicación-modelos-de-programación-plataforma-e-infraestructura)
     - [Diseño del software (diseño arquitectónico, base del código, dependencias…)](#diseño-del-software-diseño-arquitectónico-base-del-código-dependencias)
     - [Uso (incluyendo capturas de pantalla que demuestren su funcionamiento)](#uso-incluyendo-capturas-de-pantalla-que-demuestren-su-funcionamiento)
       - [Uso fuera de la insfractuctura cloud](#uso-fuera-de-la-insfractuctura-cloud)
@@ -19,6 +19,10 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
       - [Cluster](#cluster)
       - [Archivos outputs](#archivos-outputs)
     - [Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas](#evaluación-de-rendimiento-aceleración-en-la-nube-y-discusión-sobre-los-sobrecostes-identificados-y-optimizaciones-realizadas)
+      - [Speed up en maquina local con distintos hilos](#speed-up-en-maquina-local-con-distintos-hilos)
+      - [Speed up en maquina local con distinta cantidad de vCpus](#speed-up-en-maquina-local-con-distinta-cantidad-de-vcpus)
+      - [Speed en cluster con distinta cantidad de nodos](#speed-en-cluster-con-distinta-cantidad-de-nodos)
+      - [Speed en clsuter con distinta cantidad de vCpus](#speed-en-clsuter-con-distinta-cantidad-de-vcpus)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
     - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
     - [Referencias](#referencias)
@@ -123,18 +127,20 @@ El proyecto es un sistema modular diseñado para analizar y procesar grandes con
 
 **Modelos de Programación**  
 El proyecto se basa en **Apache Spark**, un framework de computación distribuida, para procesar datos en paralelo. Utiliza **DataFrames** como abstracción principal para el procesamiento de datos, lo que aporta varias ventajas:
+
 - **Lenguaje de Consultas de Alto Nivel**: Los DataFrames permiten realizar operaciones similares a SQL, simplificando las transformaciones complejas.
 - **Ejecución Optimizada**: El optimizador Catalyst de Spark mejora el rendimiento generando planes de ejecución eficientes.
 - **Computación Distribuida**: Las tareas se distribuyen entre nodos, habilitando el paralelismo.
 
 Herramientas y bibliotecas clave utilizadas:
+
 1. **PySpark**: Facilita la interacción con Spark desde Python.
 2. **GeoIP2**: Proporciona capacidades de geolocalización de IPs.
 3. **Python**: Es el lenguaje principal para la manipulación de datos y la orquestación.
 
 Los scripts incluyen:
 
-  - Análisis de Ancho de Banda: Agrega métricas de tráfico en ventanas de 1 segundo.
+- Análisis de Ancho de Banda: Agrega métricas de tráfico en ventanas de 1 segundo.
   - Frecuencia de Protocolos: Calcula la frecuencia de uso de diferentes protocolos.
   - Índice Invertido: Mapea términos como flags TCP y métodos HTTP a paquetes asociados.
   - Geolocalización: Extrae información geográfica de direcciones IP únicas utilizando la base de datos GeoLite2.
@@ -145,6 +151,7 @@ El modelo de programación sigue el paradigma **MapReduce**, ya que Spark proces
 
 **Plataforma**  
 La aplicación puede ejecutarse en:
+
 1. **Entorno Local**: Usando un entorno virtual de Python para pruebas a pequeña escala.
 2. **Infraestructura en la Nube**: El proyecto utiliza **Google Cloud Platform (GCP)** con instancias de máquinas virtuales para computación distribuida. Los scripts gestionan automáticamente la provisión y liberación de recursos, optimizando costes y uso.
 
@@ -152,6 +159,7 @@ La aplicación puede ejecutarse en:
 
 **Infraestructura**  
 La infraestructura combina los siguientes elementos:
+
 1. **Recursos de Cómputo**:
    - **Máquinas Virtuales**: Instancias personalizables creadas dinámicamente en GCP para soportar tareas distribuidas con Spark.
    - **Configuración Local**: Entornos virtuales en Python 3.12 con dependencias instaladas desde requirements.txt. Los conjuntos de datos y los resultados se gestionan localmente para cargas de trabajo menores o pruebas.
@@ -164,9 +172,6 @@ La infraestructura combina los siguientes elementos:
 4. **Seguridad**:
    - Asegurada mediante políticas de IAM (Gestión de Identidades y Accesos).
    - El acceso a la base de datos GeoLite2 y a los conjuntos de datos está restringido a procesos autorizados.
-
-
-
 
 ### Diseño del software (diseño arquitectónico, base del código, dependencias…)
 
@@ -253,11 +258,123 @@ Funcionamiento
 
 #### Maquina local en el cloud
 
+Para ejecutar la aplicación en una  maquina local de GCP hemos hecho varios scripts para ocuparnos de la creación , ejecución y eliminación de la maquina.
+
+Creación de la maquina:
+
+```bash
+./crear_maquina.sh -h
+```
+
+Salida:
+
+```bash
+Uso: ./crear_maquina.sh -t TIPO_DE_MAQUINA [-h]
+
+Opciones:
+  -t TIPO_DE_MAQUINA   Especifica el tipo de máquina (e.g., e2-standard-4, custom-8-16384)
+  -h                   Muestra esta ayuda y termina
+```
+
+Ejemplo de ejecución,creacion de una maquina con 4 vCpus y 16 GB de RAM:
+
+```bash
+/crear_maquina.sh -t e2-standard-4
+```
+
+Salida:
+
+```bash
+Creando instancia con tipo de máquina: e2-standard-4
+Created [https://www.googleapis.com/compute/v1/projects/lab1cloudbigdata/zones/europe-southwest1-a/instances/spark-local].
+NAME: spark-local
+ZONE: europe-southwest1-a
+MACHINE_TYPE: e2-standard-4
+PREEMPTIBLE: 
+INTERNAL_IP: 10.204.0.33
+EXTERNAL_IP: 34.175.252.53
+STATUS: RUNNING
+Instancia creada exitosamente.
+```
+
+Nos conectamos por ssh y subimos los archivos correspondientes para que quede el directorio de la siguiente manera:
+
+![Directorio maquina local GCP](./imagenes/directorio_local_GCP.png)
+
+Ejecución de la aplicación:
+
+```bash
+./ejecucion_spark.sh -h
+```
+
+Salida:
+
+```bash
+Uso: ./ejecucion_spark.sh <ruta_dataset> <output_dir> [filter_bandwidth] [comparator] [top_k] [num_threads]
+Parámetros:
+  <ruta_dataset>       Ruta al dataset a procesar
+  <output_dir>         Directorio donde se guardarán los resultados
+  [filter_bandwidth]   (Opcional) Ancho de banda para el filtro
+  [comparator]         (Opcional) Comparador para el filtro
+  [top_k]              (Opcional) Valor k para el top k
+  [num_threads]        (Opcional) Número de hilos para Spark (local[i])
+  -h   
+```
+
+```bash
+./ejecucion_spark.sh AfreecaTV.csv output 121212 0 23 1
+```
+
+Salida en la terminal:
+
+![GCP_local1](./imagenes/GCP_local1.png)
+
+![GCP_local2](./imagenes/GCP_local2.png)
+
+![GCP_local3](./imagenes/GCP_local3.png)
+
+![GCP_local4](./imagenes/GCP_local4.png)
+
+![GCP_local5](./imagenes/GCP_local5.png)
+
+![GCP_local6](./imagenes/GCP_local6.png)
+
+![GCP_local7](./imagenes/GCP_local7.png)
+
+
+
+
+
+
+
 #### Cluster
 
 #### Archivos outputs
 
 ### Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas
+
+Para calcular los speed ups se ha utlizado la siguiente formula: $Speed\text{-}up = \frac{T_{control}}{T_{modificacion}}$ definiendo la maquina de control en cada apartado
+
+#### Speed up en maquina local con distintos hilos
+
+Control = 1 hilo
+
+Ancho_banda: 62 segundos 
+Frecuencia de protocolos: 55 segundos
+Inverted index: 123 segundos
+Media ancho de banda por protocolo: 58 segundos
+Filtro ancho de banda: 12 segundos
+Top ancho de banda: 12 segundos
+Ips ubicacion: 2 segundos
+Total de módulos: 324 segundos
+
+#### Speed up en maquina local con distinta cantidad de vCpus
+
+Control = 4 vCpus
+
+#### Speed en cluster con distinta cantidad de nodos
+
+#### Speed en clsuter con distinta cantidad de vCpus
 
 ### Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes
 
