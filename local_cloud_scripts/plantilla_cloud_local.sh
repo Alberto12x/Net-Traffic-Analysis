@@ -8,11 +8,6 @@ echo "export PATH=\$PATH:/usr/local/spark/bin" >> /etc/profile.d/spark.sh
 apt-get update
 apt-get install -y default-jre python-is-python3 python3-venv
 
-# Crear un entorno virtual de Python
-mkdir -p /opt/virtualenvs
-python3 -m venv /opt/virtualenvs/spark_env
-
-
 # Descargar e instalar Apache Spark
 wget https://dlcdn.apache.org/spark/spark-3.5.3/spark-3.5.3-bin-hadoop3.tgz
 tar xzf spark-3.5.3-bin-hadoop3.tgz
@@ -20,12 +15,4 @@ mv spark-3.5.3-bin-hadoop3 /usr/local/spark
 rm spark-3.5.3-bin-hadoop3.tgz
 
 
-# Activar el entorno virtual e instalar dependencias
-source /opt/virtualenvs/spark_env/bin/activate
-
-if [ -f requiriments.txt ]; then
-    pip install --upgrade pip
-    pip install -r requirements.txt
-
-deactivate
 

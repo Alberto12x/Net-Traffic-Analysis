@@ -74,7 +74,9 @@ run_spark_submit() {
 }
 
 # Activar el entorno virtual e instalar dependencias
-source /opt/virtualenvs/spark_env/bin/activate
+python -m venv venv
+source venv/bin/activate
+pip install -r requiriments.txt
 
 # Ejecutar scripts con spark-submit y calcular tiempo
 echo -e "${GREEN}Ejecutando programas de Python dentro del entorno Spark con $NUM_THREADS hilos...${RESET}"
@@ -93,3 +95,4 @@ echo -e "${GREEN}Tiempo total de ejecución: $TOTAL_TIME segundos.${RESET}"
 echo -e "${GREEN}Ejecución completa.${RESET}"
 
 deactivate
+rm -rf venv
