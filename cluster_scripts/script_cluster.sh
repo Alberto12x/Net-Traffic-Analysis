@@ -46,6 +46,14 @@ fi
 CLUSTER_NAME="cluster-spark"
 REGION="europe-southwest1"
 
+<<<<<<< HEAD
+=======
+# Crear un paquete ZIP con dependencias
+echo -e "${GREEN}Preparando dependencias para el clúster...${RESET}"
+pip install -r requiriments.txt --target ./package
+cd package && zip -r dependencies.zip . && cd ..
+
+>>>>>>> origin/main
 # Crear el clúster en GCP
 echo -e "${GREEN}Creando el clúster en GCP...${RESET}"
 start_time_total=$(date +%s)  # Medir el tiempo total de todas las tareas
@@ -62,6 +70,7 @@ gcloud dataproc clusters create $CLUSTER_NAME \
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de creación del clúster: $((end_time - start_time)) segundos.${RESET}"
 
+<<<<<<< HEAD
 # Ejecutar trabajos de Spark con los recursos máximos
 echo -e "${GREEN}Ejecutando programas de Python en el clúster de GCP...${RESET}"
 
@@ -83,18 +92,44 @@ gcloud dataproc jobs submit pyspark $BUCKET/df_codes/frecuencias_protocolos.py \
     --cluster=$CLUSTER_NAME \
     --region=$REGION \
     --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
+=======
+# Ejecutar trabajos de Spark
+echo -e "${GREEN}Ejecutando programas de Python en el clúster de GCP...${RESET}"
+
+start_time=$(date +%s)
+gcloud dataproc jobs submit pyspark $BUCKET/df_codes/ancho_banda.py \
+    --cluster=$CLUSTER_NAME\
+    --region=$REGION\
+    -- \
+    $DATASET \
+    $OUTPUT_DIR/ouput_anchobanda
+end_time=$(date +%s)
+echo -e "${GREEN}Tiempo de ejecución de 'ancho_banda.py': $((end_time - start_time)) segundos.${RESET}"
+
+start_time=$(date +%s)
+gcloud dataproc jobs submit pyspark $BUCKET/df_codes/frecuencias_protocolos.py \
+    --cluster=$CLUSTER_NAME\
+    --region=$REGION\
+>>>>>>> origin/main
     -- \
     $DATASET \
     $OUTPUT_DIR/output_frecuencia_protocolos
 end_time=$(date +%s)
 echo -e "${GREEN}Tiempo de ejecución de 'frecuencias_protocolos.py': $((end_time - start_time)) segundos.${RESET}"
 
+<<<<<<< HEAD
 echo -e "${GREEN}Ejecutando inverted_index_flags.py${RESET}"
 start_time=$(date +%s)
 gcloud dataproc jobs submit pyspark $BUCKET/df_codes/inverted_index_flags.py \
     --cluster=$CLUSTER_NAME \
     --region=$REGION \
     --properties="spark.executor.cores=$WORKER_VCPUS,spark.executor.memory=8g,spark.driver.memory=8g,spark.executor.instances=$NUM_WORKERS" \
+=======
+start_time=$(date +%s)
+gcloud dataproc jobs submit pyspark $BUCKET/df_codes/inverted_index_flags.py \
+    --cluster=$CLUSTER_NAME\
+    --region=$REGION\
+>>>>>>> origin/main
     -- \
     $DATASET \
     $OUTPUT_DIR/output_inverted_index

@@ -401,8 +401,6 @@ Deleted [https://www.googleapis.com/compute/v1/projects/lab1cloudbigdata/zones/e
 
 #### **Cluster**
 
-
-
 #### **Archivos outputs**
 
 ---
