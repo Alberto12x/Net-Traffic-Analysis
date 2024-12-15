@@ -441,8 +441,8 @@ Inverted index: 98 segundos
 Media ancho de banda por protocolo: 55 segundos
 Filtro ancho de banda: 10 segundos
 Top ancho de banda: 10 segundos
-Ips ubicacion: 78 segundos
-Total de módulos: 378 segundos
+Ips ubicacion: 68 segundos
+Total de módulos: 339 segundos
 
 16 vCpus
 Ancho_banda: 62 segundos
@@ -471,11 +471,47 @@ Total de módulos: 378 segundos
 
 8 vCpus, 2 hilos
 
+Ancho_banda: 38 segundos
+Frecuencia de protocolos: 36 segundos
+Inverted index: 65 segundos
+Media ancho de banda por protocolo: 36 segundos
+Filtro ancho de banda: 10 segundos
+Top ancho de banda: 10 segundos
+Ips ubicacion: 42 segundos
+Total de módulos: 237 segundos
+
 8 vCpus, 8 hilos
+
+Ancho_banda: 26 segundos
+Frecuencia de protocolos: 23 segundos
+Inverted index: 41 segundos
+Media ancho de banda por protocolo: 23 segundos
+Filtro ancho de banda: 11 segundos
+Top ancho de banda: 10 segundos
+Ips ubicacion: 32 segundos
+Total de módulos: 166 segundos
 
 16 vCpus, 2 hilos
 
+Ancho_banda: 62 segundos
+Frecuencia de protocolos: 55 segundos
+Inverted index: 123 segundos
+Media ancho de banda por protocolo: 58 segundos
+Filtro ancho de banda: 12 segundos
+Top ancho de banda: 12 segundos
+Ips ubicacion: 78 segundos
+Total de módulos: 378 segundos
+
 16 vCpus, 16 hilos
+
+Ancho_banda: 62 segundos
+Frecuencia de protocolos: 55 segundos
+Inverted index: 123 segundos
+Media ancho de banda por protocolo: 58 segundos
+Filtro ancho de banda: 12 segundos
+Top ancho de banda: 12 segundos
+Ips ubicacion: 78 segundos
+Total de módulos: 378 segundos
 
 
 #### **Speed-up en cluster con distinta cantidad de nodos**
