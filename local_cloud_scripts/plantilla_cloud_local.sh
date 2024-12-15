@@ -23,7 +23,7 @@ rm spark-3.5.3-bin-hadoop3.tgz
 # Activar el entorno virtual e instalar dependencias
 source /opt/virtualenvs/spark_env/bin/activate
 
-if [ -f requirements.txt ]; then
+if [ -f requiriments.txt ]; then
     pip install --upgrade pip
     pip install -r requirements.txt
 

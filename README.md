@@ -2,6 +2,8 @@
 
 Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universidad Complutense de Madrid, Facultad de Informática, 2024-2025
 
+---
+
 ## Índice
 
 - [Group9-Cloud-Big-Data](#group9-cloud-big-data)
@@ -12,17 +14,22 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
     - [Necesidad del procesamiento de Big Data y la computación en la nube](#necesidad-del-procesamiento-de-big-data-y-la-computación-en-la-nube)
     - [Descripción de los datos: ¿De dónde provienen? ¿Cómo se adquirieron? ¿Qué significan? ¿En qué formato están? ¿Cuánto pesan (mínimo 1 GB)?](#descripción-de-los-datos-de-dónde-provienen-cómo-se-adquirieron-qué-significan-en-qué-formato-están-cuánto-pesan-mínimo-1-gb)
     - [Descripción Breve de la Aplicación, Modelos de Programación, Plataforma e Infraestructura](#descripción-breve-de-la-aplicación-modelos-de-programación-plataforma-e-infraestructura)
+      - [**Descripción de la Aplicación**](#descripción-de-la-aplicación)
+      - [**Modelos de Programación**](#modelos-de-programación)
+      - [**Plataforma**](#plataforma)
+      - [**Infraestructura**](#infraestructura)
     - [Diseño del software (diseño arquitectónico, base del código, dependencias…)](#diseño-del-software-diseño-arquitectónico-base-del-código-dependencias)
     - [Uso (incluyendo capturas de pantalla que demuestren su funcionamiento)](#uso-incluyendo-capturas-de-pantalla-que-demuestren-su-funcionamiento)
-      - [Uso fuera de la insfractuctura cloud](#uso-fuera-de-la-insfractuctura-cloud)
-      - [Maquina local en el cloud](#maquina-local-en-el-cloud)
-      - [Cluster](#cluster)
-      - [Archivos outputs](#archivos-outputs)
+      - [**Uso fuera de la insfractuctura cloud**](#uso-fuera-de-la-insfractuctura-cloud)
+      - [**Maquina local en el cloud**](#maquina-local-en-el-cloud)
+      - [**Cluster**](#cluster)
+      - [**Archivos outputs**](#archivos-outputs)
     - [Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas](#evaluación-de-rendimiento-aceleración-en-la-nube-y-discusión-sobre-los-sobrecostes-identificados-y-optimizaciones-realizadas)
-      - [Speed up en maquina local con distintos hilos](#speed-up-en-maquina-local-con-distintos-hilos)
-      - [Speed up en maquina local con distinta cantidad de vCpus](#speed-up-en-maquina-local-con-distinta-cantidad-de-vcpus)
-      - [Speed en cluster con distinta cantidad de nodos](#speed-en-cluster-con-distinta-cantidad-de-nodos)
-      - [Speed en clsuter con distinta cantidad de vCpus](#speed-en-clsuter-con-distinta-cantidad-de-vcpus)
+      - [**Speed-up en maquina local con distintos hilos**](#speed-up-en-maquina-local-con-distintos-hilos)
+      - [**Speed-up en maquina local con distinta cantidad de vCpus**](#speed-up-en-maquina-local-con-distinta-cantidad-de-vcpus)
+      - [\*\*Speed-up en maquina local en la nube combinando hilos y vCpus](#speed-up-en-maquina-local-en-la-nube-combinando-hilos-y-vcpus)
+      - [**Speed-up en cluster con distinta cantidad de nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-nodos)
+      - [**Speed-up en cluster con distinta cantidad de vCpus**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
     - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
     - [Referencias](#referencias)
@@ -31,6 +38,8 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
 
 - Alberto Martin Oruña ([@Alberto12x](https://github.com/Alberto12x/))
 - José Caleb Gálvez Valladares ([@JGalvez27](https://github.com/JGalvez27/))
+
+---
 
 ## Informe del Proyecto
 
@@ -48,6 +57,8 @@ El objetivo es realizar diversas tareas de procesamiento y análisis, tales como
 - Obtener la localización de las ips de modo que se puede observar para casos como videos en directo desde donde está conectada la gente que te ve.
   
 El desafío principal reside en la gran escala de los datos, que puede superar varios gigabytes (en el caso de la practica no pero el trafico en la red es muy grabde), y en la complejidad computacional de las tareas requeridas. Además, se busca garantizar la escalabilidad y eficiencia del procesamiento utilizando tecnologías de Big Data como Apache Spark, en combinación con infraestructuras Cloud que permitan trabajar con recursos distribuidos y escalables.
+
+---
 
 ### Necesidad del procesamiento de Big Data y la computación en la nube
 
@@ -85,6 +96,8 @@ Esto enriquece los resultados del análisis y aumenta el valor práctico del pro
 Las soluciones en la nube eliminan la necesidad de una infraestructura física costosa, ofreciendo un acceso sencillo a recursos de alto rendimiento.
 En conclusión, el uso de tecnologías de Big Data y computación en la nube no solo es necesario, sino que es un componente clave para garantizar el éxito del proyecto, permitiendo procesar y analizar datos masivos de manera eficiente, escalable y rentable.
 
+---
+
 ### Descripción de los datos: ¿De dónde provienen? ¿Cómo se adquirieron? ¿Qué significan? ¿En qué formato están? ¿Cuánto pesan (mínimo 1 GB)?
 
 Se pueden descarga el dataset en este [enlace](https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory) el cual le lleva a la página donde descargarlo.
@@ -118,14 +131,16 @@ El dataset que se ha utilizado en este proyecto pesa 1.3 GB, este tamaño ha hec
 
 ![Imagen del peso del dataset](./imagenes/peso_dataset.png)
 
-### Descripción Breve de la Aplicación, Modelos de Programación, Plataforma e Infraestructura
-
-**Descripción de la Aplicación**  
-El proyecto es un sistema modular diseñado para analizar y procesar grandes conjuntos de datos de tráfico de red de manera eficiente. Sus principales objetivos son extraer información relevante, detectar patrones, identificar anomalías y apoyar en la gestión de infraestructuras de red. Aprovechando tecnologías de Big Data y computación en la nube, el sistema maneja gigabytes de datos de red almacenados en formato CSV. La aplicación incluye funcionalidades como el cálculo de métricas de ancho de banda, análisis de frecuencias de protocolos, índices invertidos para búsquedas más rápidas y geolocalización de direcciones IP. Está diseñada para garantizar escalabilidad y optimización del rendimiento.
-
 ---
 
-**Modelos de Programación**  
+### Descripción Breve de la Aplicación, Modelos de Programación, Plataforma e Infraestructura
+
+ #### **Descripción de la Aplicación**  
+
+El proyecto es un sistema modular diseñado para analizar y procesar grandes conjuntos de datos de tráfico de red de manera eficiente. Sus principales objetivos son extraer información relevante, detectar patrones, identificar anomalías y apoyar en la gestión de infraestructuras de red. Aprovechando tecnologías de Big Data y computación en la nube, el sistema maneja gigabytes de datos de red almacenados en formato CSV. La aplicación incluye funcionalidades como el cálculo de métricas de ancho de banda, análisis de frecuencias de protocolos, índices invertidos para búsquedas más rápidas y geolocalización de direcciones IP. Está diseñada para garantizar escalabilidad y optimización del rendimiento.
+
+#### **Modelos de Programación**  
+
 El proyecto se basa en **Apache Spark**, un framework de computación distribuida, para procesar datos en paralelo. Utiliza **DataFrames** como abstracción principal para el procesamiento de datos, lo que aporta varias ventajas:
 
 - **Lenguaje de Consultas de Alto Nivel**: Los DataFrames permiten realizar operaciones similares a SQL, simplificando las transformaciones complejas.
@@ -147,17 +162,15 @@ Los scripts incluyen:
 
 El modelo de programación sigue el paradigma **MapReduce**, ya que Spark procesa los datos mediante transformaciones de mapeo y reduce los resultados en un entorno distribuido.
 
----
+#### **Plataforma**  
 
-**Plataforma**  
 La aplicación puede ejecutarse en:
 
 1. **Entorno Local**: Usando un entorno virtual de Python para pruebas a pequeña escala.
 2. **Infraestructura en la Nube**: El proyecto utiliza **Google Cloud Platform (GCP)** con instancias de máquinas virtuales para computación distribuida. Los scripts gestionan automáticamente la provisión y liberación de recursos, optimizando costes y uso.
 
----
+#### **Infraestructura**  
 
-**Infraestructura**  
 La infraestructura combina los siguientes elementos:
 
 1. **Recursos de Cómputo**:
@@ -172,6 +185,8 @@ La infraestructura combina los siguientes elementos:
 4. **Seguridad**:
    - Asegurada mediante políticas de IAM (Gestión de Identidades y Accesos).
    - El acceso a la base de datos GeoLite2 y a los conjuntos de datos está restringido a procesos autorizados.
+
+---
 
 ### Diseño del software (diseño arquitectónico, base del código, dependencias…)
 
@@ -200,9 +215,11 @@ A continuación se describen las principales librerías utilizadas en el proyect
 
 Ademas es necesario descargarse la base de datos [GeoLite2-City.mmdb](https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb) la cual proviene de este [repositorio de github](https://github.com/P3TERX/GeoLite.mmdb?tab=readme-ov-file). Los scripts de ejcución ya se encargan de su descarga.
 
+---
+
 ### Uso (incluyendo capturas de pantalla que demuestren su funcionamiento)
 
-#### Uso fuera de la insfractuctura cloud
+#### **Uso fuera de la insfractuctura cloud**
 
 ```bash
 ./script_ejecucion_local.sh <ancho de banda para el filtro> <Comparador 1 > , 0 <= > <top k> <dataset>
@@ -256,7 +273,7 @@ Mensajes de ayuda
 
 Funcionamiento
 
-#### Maquina local en el cloud
+#### **Maquina local en el cloud**
 
 Para ejecutar la aplicación en una  maquina local de GCP hemos hecho varios scripts para ocuparnos de la creación , ejecución y eliminación de la maquina.
 
@@ -321,6 +338,8 @@ Parámetros:
   -h   
 ```
 
+Ejemplo:
+
 ```bash
 ./ejecucion_spark.sh AfreecaTV.csv output 121212 0 23 1
 ```
@@ -341,40 +360,129 @@ Salida en la terminal:
 
 ![GCP_local7](./imagenes/GCP_local7.png)
 
+Esta ejecucion genera la misma estructura de directorios que la ejecución en local fuera del cloud:
 
+![estructura_directorio_local_cloud](./imagenes/estructura_directorio_local_cloud.png)
 
+Con un contenido similar entre todas ellas:
 
+![estructura_directorio_local_cloud2](./imagenes/estructura_directorio_local_cloud2.png)
 
+Borrado de la maquina:
 
+```bash
+./borrar_maquina.sh -h
+```
 
-#### Cluster
+Salida:
 
-#### Archivos outputs
+```bash
+Uso: ./borrar_maquina.sh [-h]
+
+Opciones:
+  -h    Muestra este mensaje de ayuda y sale.
+
+Este script elimina la instancia 'spark-local' en Google Cloud Compute.
+```
+
+Ejemplo:
+
+```bash
+./borrar_maquina.sh
+```
+
+Salida:
+
+```bash
+Deleted [https://www.googleapis.com/compute/v1/projects/lab1cloudbigdata/zones/europe-southwest1-a/instances/spark-local].
+
+```
+
+#### **Cluster**
+
+#### **Archivos outputs**
+
+---
 
 ### Evaluación de rendimiento (aceleración) en la nube y discusión sobre los sobrecostes identificados y optimizaciones realizadas
 
 Para calcular los speed ups se ha utlizado la siguiente formula: $Speed\text{-}up = \frac{T_{control}}{T_{modificacion}}$ definiendo la maquina de control en cada apartado
 
-#### Speed up en maquina local con distintos hilos
+#### **Speed-up en maquina local con distintos hilos**
 
-Control = 1 hilo
 
-Ancho_banda: 62 segundos 
+| Hilos | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
+|-------|---------------------|-------------------------|-----------------------------|-----------------------------------|---------------------|-------------------------|---------------------------|-------------------------------|---------------------------|-----------------------------|------------------------|-------------------------|--------------------|--------------------|-------------------|----------------|
+| 1     | 62                  | 1.00                   | 55                          | 1.00                              | 123                 | 1.00                   | 58                        | 1.00                         | 12                        | 1.00                       | 12                     | 1.00                   | 78                 | 1.00                | 378               | 1.00           |
+| 2     | 37                  | 1.68                   | 37                          | 1.49                              | 69                  | 1.78                   | 34                        | 1.71                         | 11                        | 1.09                       | 11                     | 1.09                   | 47                 | 1.66                | 246               | 1.54           |
+| 3     | 40                  | 1.55                   | 37                          | 1.49                              | 66                  | 1.86                   | 37                        | 1.57                         | 11                        | 1.09                       | 12                     | 1.00                   | 48                 | 1.63                | 251               | 1.51           |
+| 4     | 41                  | 1.51                   | 35                          | 1.57                              | 66                  | 1.86                   | 33                        | 1.76                         | 12                        | 1.00                       | 11                     | 1.09                   | 49                 | 1.59                | 247               | 1.53           |
+| 5     | 36                  | 1.72                   | 37                          | 1.49                              | 65                  | 1.89                   | 36                        | 1.61                         | 11                        | 1.09                       | 12                     | 1.00                   | 48                 | 1.63                | 245               | 1.54           |
+| 6     | 38                  | 1.63                   | 38                          | 1.45                              | 69                  | 1.78                   | 35                        | 1.66                         | 12                        | 1.00                       | 12                     | 1.00                   | 51                 | 1.53                | 255               | 1.48           |
+
+
+#### **Speed-up en maquina local con distinta cantidad de vCpus**
+
+Control = 4 vCpus , 1 hilos
+
+Ancho_banda: 62 segundos
 Frecuencia de protocolos: 55 segundos
 Inverted index: 123 segundos
 Media ancho de banda por protocolo: 58 segundos
 Filtro ancho de banda: 12 segundos
 Top ancho de banda: 12 segundos
-Ips ubicacion: 2 segundos
-Total de módulos: 324 segundos
+Ips ubicacion: 78 segundos
+Total de módulos: 378 segundos
 
-#### Speed up en maquina local con distinta cantidad de vCpus
+8 vCpus
+Ancho_banda: 54 segundos
+Frecuencia de protocolos: 49 segundos
+Inverted index: 98 segundos
+Media ancho de banda por protocolo: 55 segundos
+Filtro ancho de banda: 10 segundos
+Top ancho de banda: 10 segundos
+Ips ubicacion: 78 segundos
+Total de módulos: 378 segundos
 
-Control = 4 vCpus
+16 vCpus
+Ancho_banda: 62 segundos
+Frecuencia de protocolos: 55 segundos
+Inverted index: 123 segundos
+Media ancho de banda por protocolo: 58 segundos
+Filtro ancho de banda: 12 segundos
+Top ancho de banda: 12 segundos
+Ips ubicacion: 78 segundos
+Total de módulos: 378 segundos
 
-#### Speed en cluster con distinta cantidad de nodos
+#### **Speed-up en maquina local en la nube combinando hilos y vCpus
 
-#### Speed en clsuter con distinta cantidad de vCpus
+No hemos dispuesto de timpoi suficiente como probar una gran combinación pero intuimos observando los speed-up anteriores que el mismo número de hilos  que de vCpus alcanza un valor de speed-up cercano al máximo alcanzable
+
+Control = 4 vCpus , 1 hilos
+
+Ancho_banda: 62 segundos
+Frecuencia de protocolos: 55 segundos
+Inverted index: 123 segundos
+Media ancho de banda por protocolo: 58 segundos
+Filtro ancho de banda: 12 segundos
+Top ancho de banda: 12 segundos
+Ips ubicacion: 78 segundos
+Total de módulos: 378 segundos
+
+8 vCpus, 2 hilos
+
+8 vCpus, 8 hilos
+
+16 vCpus, 2 hilos
+
+16 vCpus, 16 hilos
+
+
+#### **Speed-up en cluster con distinta cantidad de nodos**
+
+#### **Speed-up en cluster con distinta cantidad de vCpus**
+
+---
 
 ### Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes
 
