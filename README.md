@@ -31,7 +31,6 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
       - [**Speed-up en cluster con distinta cantidad de nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-nodos)
       - [**Speed-up en cluster con distinta cantidad de vCpus**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus)
       - [**Speed-up en cluster con distinta cantidad de vCpus y nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus-y-nodos)
-      - [**Speed-up local en GCP vs Cluster**](#speed-up-local-en-gcp-vs-cluster)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
     - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
     - [Referencias](#referencias)
@@ -605,65 +604,31 @@ No hemos dispuesto de timpoi suficiente como probar una gran combinación pero i
 | 16    | 16    | 19                  | 3.26                    | 17                          | 3.24                              | 27                  | 4.56                    | 17                        | 3.41                         | 10                        | 1.20                        | 10                     | 1.20                   | 21                 | 3.71                | 121               | 3.13           |
 
 #### **Speed-up en cluster con distinta cantidad de nodos**
+| vCPUs | Nodos | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
+|-------|-------|---------------------|-------------------------|-----------------------------|-----------------------------------|---------------------|-------------------------|---------------------------|-------------------------------|---------------------------|-----------------------------|------------------------|-------------------------|--------------------|--------------------|-------------------|----------------|
+| 4     | 2     | 80                  | 1.00                    | 64                          | 1.00                              | 85                  | 1.00                    | 65                        | 1.00                         | 47                        | 1.00                        | 49                     | 1.00                   | 84                 | 1.00                | 474               | 1.00           |
+| 4    | 4     | 69                  | 1.16                    | 50                          | 1.28                              | 60                  | 1.42                    | 50                        | 1.30                         | 40                        | 1.18                        | 40                     | 1.23                   | 66                 | 1.27                | 375               | 1.26           |
+| 4    | 5     | 62                  | 1.29                    | 48                          | 1.33                              | 60                  | 1.42                    | 45                        | 1.44                         | 40                        | 1.18                        | 39                     | 1.26                   | 62                 | 1.35                | 356               | 1.33           |
 
-Control  2 nodos 4 vCpus
-
-Ancho de banda: 80 segundos
-Frecuencia protocolos: 64 segundos
-Inverted index: 85 segundos
-Media ancho por protocolo: 65 segundos
-Filtro ancho banda: 47 segundos
-Top ancho banda: 49 segundos
-Ips ubicacion: 84 segundos
-
-4 nodos 4 vCpus
-
-Ancho de banda: 69 segundos
-Frecuencia protocolos: 50 segundos
-Inverted index: 60 segundos
-Media ancho por protocolo: 50 segundos
-Filtro ancho banda: 40 segundos
-Top ancho banda: 40 segundos
-Ips ubicacion: 66 segundos
-
-5 nodos 4 vCpus
-
-Ancho de banda: 62 segundos
-Frecuencia protocolos: 48 segundos
-Inverted index: 60 segundos
-Media ancho por protocolo: 45 segundos
-Filtro ancho banda: 40 segundos
-Top ancho banda: 39 segundos
-Ips ubicacion: 62 segundos
-
-No podemos evaluar con mas porque llegamos al limite de cpus que tebemos de cuota en la zona europe-southwest1, permite 24 vcpus. Pero sabemos que hay un punto donde aumentar los nodos no mejora los tiempos debido a que e coste temporal de su comunicación supera el ahorra de distrubuir y parelelizar los datos y computos.
-
+No podemos evaluar con mas porque llegamos al limite de vCpus que tebemos de cuota en la zona europe-southwest1, permite 24 vcpus. Pero sabemos que hay un punto donde aumentar los nodos no mejora los tiempos debido a que e coste temporal de su comunicación supera el ahorra de distrubuir y parelelizar los datos y computos.
 
 #### **Speed-up en cluster con distinta cantidad de vCpus**
 
-Control  2 nodos 4 vCpus
 
-Ancho de banda: 80 segundos
-Frecuencia protocolos: 64 segundos
-Inverted index: 85 segundos
-Media ancho por protocolo: 65 segundos
-Filtro ancho banda: 47 segundos
-Top ancho banda: 49 segundos
-Ips ubicacion: 84 segundos
+|   vCPUs |   Nodos |   Ancho de Banda (s) |   Speed-up Ancho de Banda |   Frecuencia de Protocolos (s) |   Speed-up Frecuencia de Protocolos |   Inverted Index (s) |   Speed-up Inverted Index |   Media Ancho de Banda (s) |   Speed-up Media Ancho de Banda |   Filtro Ancho de Banda (s) |   Speed-up Filtro Ancho de Banda |   Top Ancho de Banda (s) |   Speed-up Top Ancho de Banda |   IPs Ubicación (s) |   Speed-up IPs Ubicación |   Total Módulos (s) |   Speed-up Total |
+|--------:|--------:|---------------------:|--------------------------:|-------------------------------:|------------------------------------:|---------------------:|--------------------------:|---------------------------:|--------------------------------:|----------------------------:|---------------------------------:|-------------------------:|------------------------------:|--------------------:|-------------------------:|--------------------:|-----------------:|
+|       4 |       2 |                   80 |                   1.00    |                             64 |                                1.00 |                   85 |                   1.00    |                         65 |                         1.00    |                          47 |                          1.00    |                       49 |                       1.00    |                  84 |                      1.00 |                 474 |          1.00    |
+|       8 |       2 |                   61 |                   1.31    |                             50 |                                1.28 |                   56 |                   1.52    |                         44 |                         1.48    |                          35 |                          1.34    |                       36 |                       1.36    |                  60 |                      1.40 |                 342 |          1.39    |
+
 
 #### **Speed-up en cluster con distinta cantidad de vCpus y nodos**
 
-Control  2 nodos 4 vCpus
+|   vCPUs |   Nodos |   Ancho de Banda (s) |   Speed-up Ancho de Banda |   Frecuencia de Protocolos (s) |   Speed-up Frecuencia de Protocolos |   Inverted Index (s) |   Speed-up Inverted Index |   Media Ancho de Banda (s) |   Speed-up Media Ancho de Banda |   Filtro Ancho de Banda (s) |   Speed-up Filtro Ancho de Banda |   Top Ancho de Banda (s) |   Speed-up Top Ancho de Banda |   IPs Ubicación (s) |   Speed-up IPs Ubicación |   Total Módulos (s) |   Speed-up Total |
+|--------:|--------:|---------------------:|--------------------------:|-------------------------------:|------------------------------------:|---------------------:|--------------------------:|---------------------------:|--------------------------------:|----------------------------:|---------------------------------:|-------------------------:|------------------------------:|--------------------:|-------------------------:|--------------------:|-----------------:|
+|       4 |       2 |                   80 |                  1.00     |                             64 |                              1.00   |                   85 |                   1.00     |                         65 |                             1.00 |                          47 |                          1.00    |                       49 |                         1.00  |                  84 |                      1.00 |                 474 |          1.00    |
+|       2 |      10 |                   81 |                  0.99     |                             51 |                              1.25   |                   60 |                   1.42     |                         50 |                             1.30 |                          44 |                          1.07    |                       40 |                         1.23  |                  70 |                      1.20 |                 396 |          1.20    |
+| 4    | 5     | 62                  | 1.29                    | 48                          | 1.33                              | 60                  | 1.42                    | 45                        | 1.44                         | 40                        | 1.18                        | 39                     | 1.26                   | 62                 | 1.35                | 356               | 1.33           |
 
-Ancho de banda: 80 segundos
-Frecuencia protocolos: 64 segundos
-Inverted index: 85 segundos
-Media ancho por protocolo: 65 segundos
-Filtro ancho banda: 47 segundos
-Top ancho banda: 49 segundos
-Ips ubicacion: 84 segundos
-
-#### **Speed-up local en GCP vs Cluster**
 
 ---
 
