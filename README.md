@@ -71,6 +71,7 @@ El manejo eficiente de estos volúmenes de datos excede las capacidades de los s
 
 **2. Complejidad del procesamiento:**
 El análisis incluye tareas intensivas como filtrado, extracción de patrones, construcción de índices invertidos y cálculo de métricas clave. Estas operaciones implican:
+
 - Procesamiento de texto, como el análisis de la columna Info para extraer palabras clave (banderas TCP, métodos HTTP, eventos TLS).
 - Agregaciones a gran escala, como el cálculo de frecuencias o el mapeo de palabras clave a identificadores de paquetes.
   
@@ -137,18 +138,20 @@ El dataset que se ha utilizado en este proyecto pesa 1.3 GB, este tamaño ha hec
 
 ### Descripción Breve de la Aplicación, Modelos de Programación, Plataforma e Infraestructura
 
- #### **Descripción de la Aplicación**  
+#### **Descripción de la Aplicación**  
 
-El proyecto es un sistema modular diseñado para analizar y procesar grandes conjuntos de datos de tráfico de red de manera eficiente. Sus principales objetivos son extraer información relevante, detectar patrones, identificar anomalías y apoyar en la gestión de infraestructuras de red. Aprovechando tecnologías de Big Data y computación en la nube, el sistema maneja gigabytes de datos de red almacenados en formato CSV. La aplicación incluye funcionalidades como el cálculo de métricas de ancho de banda, análisis de frecuencias de protocolos, índices invertidos para búsquedas más rápidas y geolocalización de direcciones IP. Está diseñada para garantizar escalabilidad y optimización del rendimiento.
+El proyecto es un sistema modular diseñado para analizar y procesar grandes volúmenes de datos de tráfico de red de manera eficiente, aprovechando tecnologías de Big Data y computación en la nube. Sus objetivos principales incluyen la extracción de información relevante, la detección de patrones, la identificación de anomalías y el apoyo en la gestión de infraestructuras de red.
+
+Utilizando Apache Spark en Google Cloud Dataproc, el sistema procesa datos almacenados en buckets de GCP (Google Cloud Storage) en formato CSV. La aplicación realiza tareas como el cálculo de métricas de ancho de banda, el análisis de frecuencias de protocolos, la creación de índices invertidos para búsquedas optimizadas y la geolocalización de direcciones IP. Está diseñada para garantizar escalabilidad, eficiencia y un uso optimizado de recursos.
 
 #### **Modelos de Programación**  
 
-El proyecto se basa en **Apache Spark**, un framework de computación distribuida, para procesar datos en paralelo. Utiliza **DataFrames** como abstracción principal para el procesamiento de datos, lo que aporta varias ventajas:
+El proyecto utiliza Apache Spark, un framework de computación distribuida, desplegado sobre Google Cloud Dataproc para el procesamiento de datos en paralelo. La principal abstracción utilizada es DataFrames, lo que aporta múltiples ventajas:
 
-- **Lenguaje de Consultas de Alto Nivel**: Los DataFrames permiten realizar operaciones similares a SQL, simplificando las transformaciones complejas.
-- **Ejecución Optimizada**: El optimizador Catalyst de Spark mejora el rendimiento generando planes de ejecución eficientes.
-- **Computación Distribuida**: Las tareas se distribuyen entre nodos, habilitando el paralelismo.
-
+- **Lenguaje de Consultas de Alto Nivel**: Facilita operaciones similares a SQL para simplificar transformaciones complejas.
+- **Optimización del Rendimiento**: El optimizador Catalyst de Spark genera planes de ejecución eficientes.
+- **Procesamiento Distribuido**: Las tareas se dividen entre nodos de Dataproc, habilitando un alto paralelismo.
+  
 Herramientas y bibliotecas clave utilizadas:
 
 1. **PySpark**: Facilita la interacción con Spark desde Python.
@@ -162,20 +165,19 @@ Los scripts incluyen:
 - Índice Invertido: Mapea términos como flags TCP y métodos HTTP a paquetes asociados.
 - Geolocalización: Extrae información geográfica de direcciones IP únicas utilizando la base de datos GeoLite2.
 
-El modelo de programación sigue el paradigma **MapReduce**, ya que Spark procesa los datos mediante transformaciones de mapeo y reduce los resultados en un entorno distribuido.
-
 #### **Plataforma**  
 
 La aplicación puede ejecutarse en:
 
 1. **Entorno Local**: Usando un entorno virtual de Python para pruebas a pequeña escala.
-2. **Infraestructura en la Nube**: El proyecto utiliza **Google Cloud Platform (GCP)** con instancias de máquinas virtuales para computación distribuida. Los scripts gestionan automáticamente la provisión y liberación de recursos, optimizando costes y uso.
+2. **Infraestructura en la Nube**: El proyecto utiliza **Google Cloud Platform (GCP)** con instancias de máquinas virtuales para computación distribuida, Google Cloud Dataproc y los datos de entrada y salida se almacenana en Google Cloud Storage, buckets. Los scripts gestionan automáticamente la provisión y liberación de recursos, optimizando costes y uso.
 
 #### **Infraestructura**  
 
 La infraestructura combina los siguientes elementos:
 
 1. **Recursos de Cómputo**:
+   - **Google Cloud Dataproc**: Plataforma administrada de Apache Spark para tareas distribuidas.
    - **Máquinas Virtuales**: Instancias personalizables creadas dinámicamente en GCP para soportar tareas distribuidas con Spark.
    - **Configuración Local**: Entornos virtuales en Python 3.12 con dependencias instaladas desde requirements.txt. Los conjuntos de datos y los resultados se gestionan localmente para cargas de trabajo menores o pruebas.
 2. **Almacenamiento**:
@@ -605,6 +607,7 @@ No hemos dispuesto de timpoi suficiente como probar una gran combinación pero i
 | 16    | 16    | 19                  | 3.26                    | 17                          | 3.24                              | 27                  | 4.56                    | 17                        | 3.41                         | 10                        | 1.20                        | 10                     | 1.20                   | 21                 | 3.71                | 121               | 3.13           |
 
 #### **Speed-up en cluster con distinta cantidad de nodos**
+
 | vCPUs | Nodos | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
 |-------|-------|---------------------|-------------------------|-----------------------------|-----------------------------------|---------------------|-------------------------|---------------------------|-------------------------------|---------------------------|-----------------------------|------------------------|-------------------------|--------------------|--------------------|-------------------|----------------|
 | 4     | 2     | 80                  | 1.00                    | 64                          | 1.00                              | 85                  | 1.00                    | 65                        | 1.00                         | 47                        | 1.00                        | 49                     | 1.00                   | 84                 | 1.00                | 474               | 1.00           |
@@ -615,12 +618,10 @@ No podemos evaluar con mas porque llegamos al limite de vCpus que tebemos de cuo
 
 #### **Speed-up en cluster con distinta cantidad de vCpus**
 
-
 |   vCPUs |   Nodos |   Ancho de Banda (s) |   Speed-up Ancho de Banda |   Frecuencia de Protocolos (s) |   Speed-up Frecuencia de Protocolos |   Inverted Index (s) |   Speed-up Inverted Index |   Media Ancho de Banda (s) |   Speed-up Media Ancho de Banda |   Filtro Ancho de Banda (s) |   Speed-up Filtro Ancho de Banda |   Top Ancho de Banda (s) |   Speed-up Top Ancho de Banda |   IPs Ubicación (s) |   Speed-up IPs Ubicación |   Total Módulos (s) |   Speed-up Total |
 |--------:|--------:|---------------------:|--------------------------:|-------------------------------:|------------------------------------:|---------------------:|--------------------------:|---------------------------:|--------------------------------:|----------------------------:|---------------------------------:|-------------------------:|------------------------------:|--------------------:|-------------------------:|--------------------:|-----------------:|
 |       4 |       2 |                   80 |                   1.00    |                             64 |                                1.00 |                   85 |                   1.00    |                         65 |                         1.00    |                          47 |                          1.00    |                       49 |                       1.00    |                  84 |                      1.00 |                 474 |          1.00    |
 |       8 |       2 |                   61 |                   1.31    |                             50 |                                1.28 |                   56 |                   1.52    |                         44 |                         1.48    |                          35 |                          1.34    |                       36 |                       1.36    |                  60 |                      1.40 |                 342 |          1.39    |
-
 
 #### **Speed-up en cluster con distinta cantidad de vCpus y nodos**
 
@@ -630,12 +631,15 @@ No podemos evaluar con mas porque llegamos al limite de vCpus que tebemos de cuo
 |       2 |      10 |                   81 |                  0.99     |                             51 |                              1.25   |                   60 |                   1.42     |                         50 |                             1.30 |                          44 |                          1.07    |                       40 |                         1.23  |                  70 |                      1.20 |                 396 |          1.20    |
 | 4    | 5     | 62                  | 1.29                    | 48                          | 1.33                              | 60                  | 1.42                    | 45                        | 1.44                         | 40                        | 1.18                        | 39                     | 1.26                   | 62                 | 1.35                | 356               | 1.33           |
 
-
 ---
 
 ### Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes
 
+---
+
 ### Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes
+
+---
 
 ### Referencias
 
