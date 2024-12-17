@@ -57,7 +57,7 @@ El objetivo es realizar diversas tareas de procesamiento y análisis, tales como
 - Obtener métricas clave: Calcular estadísticas como la frecuencia de protocolos, el ancho de banda promedio por protocolo y por intervalos de 1 segundo el paquete mas pequeño, el más grande, la media y la cantidad de paquetes que se han capturado en ese segundo.
 - Obtener la localización de las ips de modo que se puede observar para casos como videos en directo desde donde está conectada la gente que te ve.
   
-El desafío principal reside en la gran escala de los datos, que puede superar varios gigabytes (en el caso de la practica no pero el trafico en la red es muy grabde), y en la complejidad computacional de las tareas requeridas. Además, se busca garantizar la escalabilidad y eficiencia del procesamiento utilizando tecnologías de Big Data como Apache Spark, en combinación con infraestructuras Cloud que permitan trabajar con recursos distribuidos y escalables.
+El desafío principal reside en la gran escala de los datos, que puede superar varios gigabytes (en el caso de la practica no pero el trafico en la red es muy grande), y en la complejidad computacional de las tareas requeridas. Además, se busca garantizar la escalabilidad y eficiencia del procesamiento utilizando tecnologías de Big Data como Apache Spark, en combinación con infraestructuras Cloud que permitan trabajar con recursos distribuidos y escalables.
 
 ---
 
@@ -71,8 +71,9 @@ El manejo eficiente de estos volúmenes de datos excede las capacidades de los s
 
 **2. Complejidad del procesamiento:**
 El análisis incluye tareas intensivas como filtrado, extracción de patrones, construcción de índices invertidos y cálculo de métricas clave. Estas operaciones implican:
-Procesamiento de texto, como el análisis de la columna Info para extraer palabras clave (banderas TCP, métodos HTTP, eventos TLS).
-Agregaciones a gran escala, como el cálculo de frecuencias o el mapeo de palabras clave a identificadores de paquetes.
+- Procesamiento de texto, como el análisis de la columna Info para extraer palabras clave (banderas TCP, métodos HTTP, eventos TLS).
+- Agregaciones a gran escala, como el cálculo de frecuencias o el mapeo de palabras clave a identificadores de paquetes.
+  
 Las tecnologías usadas en Big Data ofrece la potencia necesaria para realizar estas tareas en paralelo, reduciendo significativamente los tiempos de ejecución.
 
 **3. Variabilidad y escalabilidad de los recursos:**
@@ -157,9 +158,9 @@ Herramientas y bibliotecas clave utilizadas:
 Los scripts incluyen:
 
 - Análisis de Ancho de Banda: Agrega métricas de tráfico en ventanas de 1 segundo.
-  - Frecuencia de Protocolos: Calcula la frecuencia de uso de diferentes protocolos.
-  - Índice Invertido: Mapea términos como flags TCP y métodos HTTP a paquetes asociados.
-  - Geolocalización: Extrae información geográfica de direcciones IP únicas utilizando la base de datos GeoLite2.
+- Frecuencia de Protocolos: Calcula la frecuencia de uso de diferentes protocolos.
+- Índice Invertido: Mapea términos como flags TCP y métodos HTTP a paquetes asociados.
+- Geolocalización: Extrae información geográfica de direcciones IP únicas utilizando la base de datos GeoLite2.
 
 El modelo de programación sigue el paradigma **MapReduce**, ya que Spark procesa los datos mediante transformaciones de mapeo y reduce los resultados en un entorno distribuido.
 
