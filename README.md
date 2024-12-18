@@ -33,6 +33,7 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
       - [**Speed-up en cluster con distinta cantidad de vCpus y nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus-y-nodos)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
     - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
+      - [**Conclusiones**](#conclusiones)
       - [**Mejoras sugeridos y trabajo futuro**](#mejoras-sugeridos-y-trabajo-futuro)
     - [Referencias](#referencias)
 
@@ -670,11 +671,14 @@ Un aspecto desafiante que hemos encontrado a la hora de implementar el proyecto 
 
 ### Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes
 
+#### **Conclusiones**
+
 Para facilitar las conclusiones hemos generado una serie de graficas con los archivos de salida al ejecutar el programa con el datasets entero:
 
 ![graficas_ancho_banda](./graficas/grafica_ancho_banda.jpeg)
 
 Podemos observar varias cosas:
+
 - La cantidad de paquetes por segundo varia entre los 100 y 1000  hasta el 2022-06-01 16:00:00 donde baja a 5-6 paquetes por segundo.
 - El ancho de banda ronda los 5 millones de bps hasta la misma fecha que se deploma a 1000 bps.
 - El tamaño del paquete mas grande se mantiene en los 1500 hasta el misma fecha que antes que empieza a variar ente 100-500 bits.

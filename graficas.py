@@ -10,14 +10,15 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 from datetime import datetime, timedelta
 import matplotlib.dates as mdates
+
 """
 Script que realiza graficas con el output por de script_ejecucion_local.sh
 """
 
 # Configuración del directorio y archivo
-input_directory = Path("./outputs/output_anchobanda")  
-output_directory = Path("./graficas") 
-output_directory.mkdir(parents=True, exist_ok=True)  
+input_directory = Path("./outputs/output_anchobanda")
+output_directory = Path("./graficas")
+output_directory.mkdir(parents=True, exist_ok=True)
 
 # Detectar todos los archivos CSV en el directorio
 dataframes = []
@@ -40,7 +41,9 @@ combined_df = pd.concat(dataframes, ignore_index=True)
 combined_df["start_time"] = pd.to_datetime(combined_df["start_time"], errors="coerce")
 
 # Filtrar columnas relevantes
-columns_to_plot = [col for col in combined_df.columns if col not in ["start_time", "end_time"]]
+columns_to_plot = [
+    col for col in combined_df.columns if col not in ["start_time", "end_time"]
+]
 
 # Crear la gráfica de puntos
 plt.figure(figsize=(12, 6))
@@ -49,7 +52,9 @@ for column in columns_to_plot:
 
 # Configurar el eje x con formato de fechas y etiquetas visibles
 plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=1))  # Etiquetas cada hora
-plt.gca().xaxis.set_minor_locator(mdates.MinuteLocator(interval=10))  # Ticks menores cada 10 minutos
+plt.gca().xaxis.set_minor_locator(
+    mdates.MinuteLocator(interval=10)
+)  # Ticks menores cada 10 minutos
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d %H:%M:%S"))
 plt.xticks(rotation=45)
 
@@ -76,9 +81,9 @@ print(f"La gráfica de puntos ha sido guardada como {output_file}")
 
 
 # Configuración del directorio y archivo
-input_directory = Path("./outputs/output_frecuencia_protocolos")  
-output_directory = Path("./graficas")  
-output_directory.mkdir(parents=True, exist_ok=True) 
+input_directory = Path("./outputs/output_frecuencia_protocolos")
+output_directory = Path("./graficas")
+output_directory.mkdir(parents=True, exist_ok=True)
 
 # Detectar todos los archivos CSV en el directorio
 dataframes = []
@@ -101,15 +106,14 @@ plt.figure(figsize=(10, 6))
 plt.bar(combined_df["Protocol"], combined_df["Frequency"], color="skyblue", alpha=0.7)
 plt.xlabel("Protocolo")
 plt.ylabel("Frecuencia")
-plt.yscale("log")  
+plt.yscale("log")
 plt.title("Protocolos y frecuencias")
-plt.xticks(rotation=45)  
+plt.xticks(rotation=45)
 plt.grid(True, which="both", linestyle="--", linewidth=0.5)
 output_file = output_directory / "grafica_frecuencia_protocolos.jpeg"
 plt.savefig(output_file, format="jpeg")
 plt.close()
 print(f"La gráfica de frecuencias ha sido guardada como {output_file}")
-
 
 
 ################################################################################################################################################################
@@ -119,9 +123,9 @@ print(f"La gráfica de frecuencias ha sido guardada como {output_file}")
 
 
 # Configuración del directorio y archivo
-input_directory = Path("./outputs/output_media_anchobanda_protocolos")  
-output_directory = Path("./graficas")  
-output_directory.mkdir(parents=True, exist_ok=True) 
+input_directory = Path("./outputs/output_media_anchobanda_protocolos")
+output_directory = Path("./graficas")
+output_directory.mkdir(parents=True, exist_ok=True)
 
 # Detectar todos los archivos CSV en el directorio
 dataframes = []
@@ -141,11 +145,12 @@ if not dataframes:
 combined_df = pd.concat(dataframes, ignore_index=True)
 
 
-
 plt.figure(figsize=(10, 6))
-plt.bar(combined_df["Protocol"], combined_df["AverageLength"], color="skyblue", alpha=0.7)
+plt.bar(
+    combined_df["Protocol"], combined_df["AverageLength"], color="skyblue", alpha=0.7
+)
 plt.xlabel("Protocolo")
-plt.yscale("log")  
+plt.yscale("log")
 plt.ylabel("Ancho de banda (bps)")
 plt.title("Protocolo y Ancho de Banda")
 plt.xticks(rotation=45)  # Rotar nombres del eje X 45 grados
@@ -162,11 +167,10 @@ print(f"La gráfica de ancho de banda ha sido guardada como {output_file}")
 ################################################################################################################################################################
 
 
-
 # Configuración del directorio y archivo
-input_directory = Path("./outputs/output_ip_ubicacion")  
+input_directory = Path("./outputs/output_ip_ubicacion")
 output_directory = Path("./graficas")  #
-output_directory.mkdir(parents=True, exist_ok=True) 
+output_directory.mkdir(parents=True, exist_ok=True)
 
 # Detectar todos los archivos CSV en el directorio
 dataframes = []
@@ -190,6 +194,7 @@ data = combined_df
 # Inicializar el geolocalizador
 geolocator = Nominatim(user_agent="geo_locator")
 
+
 # Obtener coordenadas para cada ciudad
 def get_coordinates(row):
     try:
@@ -200,15 +205,20 @@ def get_coordinates(row):
         print(f"Error al geocodificar {row['City']}, {row['Country']}: {e}")
     return pd.Series([None, None])
 
+
 print("Obteniendo coordenadas de las ciudades...")
 data[["Latitude", "Longitude"]] = data.apply(get_coordinates, axis=1)
 data = data.dropna(subset=["Latitude", "Longitude"])  # Elimina filas sin coordenadas
 
 # Crear un GeoDataFrame
-gdf = gpd.GeoDataFrame(data, geometry=gpd.points_from_xy(data["Longitude"], data["Latitude"]))
+gdf = gpd.GeoDataFrame(
+    data, geometry=gpd.points_from_xy(data["Longitude"], data["Latitude"])
+)
 
 # Descargar y cargar un nuevo mapa del mundo
-naturalearth_url = "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip"
+naturalearth_url = (
+    "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip"
+)
 world = gpd.read_file(naturalearth_url)
 
 # Crear la gráfica
