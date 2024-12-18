@@ -240,7 +240,7 @@ Ademas es necesario descargarse la base de datos [GeoLite2-City.mmdb](https://gi
 
 #### **Uso fuera de la insfractuctura cloud**
 
-El script ["script_ejecucion_local"](script_ejecucion_local.sh) se encarga de instalar python, crear el entorno virtual, instalar las dependencias, instalar la base de datos para la geolocalización de Ips, comprobación de existencia del direcotoro de salida, ejecución de los modulo y borrado de entorno virtual.
+El script ["script_ejecucion_local"](script_ejecucion_local.sh) se encarga de instalar python, crear el entorno virtual, instalar las dependencias, instalar la base de datos para la geolocalización de IPs, comprobación de existencia del directorio de salida, ejecución de los modulo y borrado de entorno virtual.
 
 ```bash
 ./script_ejecucion_local.sh <ancho de banda para el filtro> <Comparador 1 > , 0 <= > <top k> <dataset>
