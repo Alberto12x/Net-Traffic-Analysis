@@ -32,15 +32,13 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
       - [**Speed-up en cluster con distinta cantidad de vCpus**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus)
       - [**Speed-up en cluster con distinta cantidad de vCpus y nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus-y-nodos)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
-    - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
+    - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes.](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
     - [Referencias](#referencias)
 
 ## Participantes
 
 - Alberto Martin Oruña ([@Alberto12x](https://github.com/Alberto12x/))
 - José Caleb Gálvez Valladares ([@JGalvez27](https://github.com/JGalvez27/))
-
----
 
 ## Informe del Proyecto
 
@@ -83,7 +81,7 @@ Los sistemas Cloud permiten escalar recursos computacionales dinámicamente seg�
 - Añadir más nodos para acelerar el procesamiento.
 - Usar configuraciones específicas (como nodos con alto rendimiento en procesamiento o memoria) según el tipo de tarea.
   
-Esto reduce el costo, ya que solo se pagan los recursos utilizados, y mejora la eficiencia al evitar cuellos de botella.
+Esto reduce el costo, ya que solo se pagan los recursos utilizados, y mejora la eficiencia al evitar cuellos de botella. Esto es necesario para analizar trafico en la red ya que depende de la hora del día la cantidad de información que viaja por la red sufre cambios muy significativos , el uso del cloud como infraestructura nos permite aumentar los recursos en las horas con mas tráfico y liberar recursos cuando hay menos, disminuyundo los costes.
 
 **4. Tolerancia a fallos:**
 Los sistemas distribuidos en la nube ofrecen tolerancia a fallos integrada, asegurando que el procesamiento no se detenga ante la falla de un nodo.
@@ -91,20 +89,26 @@ Esto es esencial para garantizar la confiabilidad en el análisis de grandes vol
 
 **5. Integración con otras herramientas:**
 Las plataformas de Big Data y Cloud se integran fácilmente con tecnologías avanzadas:
-Modelos de machine learning para identificar anomalías de red o predecir comportamientos.
-Dashboards y herramientas de visualización para representar métricas clave en tiempo real.
+
+- Modelos de machine learning para identificar anomalías de red o predecir comportamientos.
+- Dashboards y herramientas de visualización para representar métricas clave en tiempo real.
+  
 Esto enriquece los resultados del análisis y aumenta el valor práctico del proyecto aunque no se haya implementado.
 
 **6. Reducción de costos y facilidad de acceso:**
 Las soluciones en la nube eliminan la necesidad de una infraestructura física costosa, ofreciendo un acceso sencillo a recursos de alto rendimiento.
+
 En conclusión, el uso de tecnologías de Big Data y computación en la nube no solo es necesario, sino que es un componente clave para garantizar el éxito del proyecto, permitiendo procesar y analizar datos masivos de manera eficiente, escalable y rentable.
 
 ---
 
 ### Descripción de los datos: ¿De dónde provienen? ¿Cómo se adquirieron? ¿Qué significan? ¿En qué formato están? ¿Cuánto pesan (mínimo 1 GB)?
 
-Se pueden descarga el dataset en este [enlace](https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory) el cual le lleva a la página donde descargarlo.
-Los datos provienen de [kaggle](https://www.kaggle.com/), del post de la siguiente url : [https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory](https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory). La url además contiene más datasets con trafico de red en contextos diferentes además de la descripción de como se han obtenido cada uno de ellos.
+Se pueden descarga el dataset en este [enlace](https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory) el cual le lleva a la página donde descargarlo, además en el archivo [enlace_drive_dataset.txt](enlace_drive_dataset.txt) se encuentra un enlace a google drive donde tambien se puede descargar.
+
+Los datos provienen de [kaggle](https://www.kaggle.com/), del post de la siguiente url : [https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory](https://www.kaggle.com/datasets/kimdaegyeom/5g-traffic-datasets?resource=download-directory).
+
+ La url además contiene más datasets con trafico de red en contextos diferentes además de la descripción de como se han obtenido cada uno de ellos.
 El conjunto de datos utilizados en nuestro proyecto proviene de la plataforma Afreeca TV, que se recolectó a través de la aplicación PCAPdroid en un terminal móvil Samsung Galaxy A90 5G, equipado con un módem Qualcomm Snapdragon X50 5G. El tráfico fue medido mientras se visualizaban transmisiones en vivo de Afreeca TV, sin tráfico de fondo, para analizar las características específicas de este tipo de tráfico.
 
 AfreecaTV es una plataforma de transmisión en vivo y video bajo demanda que se originó en Corea del Sur. El nombre “AfreecaTV” se traduce como “Anybody can Freely Broadcast TV”, lo que refleja su enfoque en permitir a cualquier persona transmitir contenido de forma gratuita. [[1]]
@@ -130,7 +134,7 @@ Ejemplo de entrada en el dataset:
 | 3   | 2022-06-01 11:32:29.327541    | 10.215.173.1   | 218.38.31.68   | TLSv1.2      | 557     | Client Hello |
 | 4   | 2022-06-01 11:32:30.276864    | 192.0.0.2      | 10.215.173.2   | TLSv1.3      | 1500     | Application Data, Application Data, Application Data |
 
-El dataset que se ha utilizado en este proyecto pesa 1.3 GB, este tamaño ha hecho que recurramos a GIT LFS para poder almacenaro en github como pide el enunciado.
+El dataset que se ha utilizado en este proyecto pesa 1.3 GB.
 
 ![Imagen del peso del dataset](./imagenes/peso_dataset.png)
 
@@ -149,7 +153,7 @@ Utilizando Apache Spark en Google Cloud Dataproc, el sistema procesa datos almac
 El proyecto utiliza Apache Spark, un framework de computación distribuida, desplegado sobre Google Cloud Dataproc para el procesamiento de datos en paralelo. La principal abstracción utilizada es DataFrames, lo que aporta múltiples ventajas:
 
 - **Lenguaje de Consultas de Alto Nivel**: Facilita operaciones similares a SQL para simplificar transformaciones complejas.
-- **Optimización del Rendimiento**: El optimizador Catalyst de Spark genera planes de ejecución eficientes.
+- **Optimización del Rendimiento**: El optimizador de Spark genera planes de ejecución eficientes.
 - **Procesamiento Distribuido**: Las tareas se dividen entre nodos de Dataproc, habilitando un alto paralelismo.
   
 Herramientas y bibliotecas clave utilizadas:
@@ -164,22 +168,25 @@ Los scripts incluyen:
 - Frecuencia de Protocolos: Calcula la frecuencia de uso de diferentes protocolos.
 - Índice Invertido: Mapea términos como flags TCP y métodos HTTP a paquetes asociados.
 - Geolocalización: Extrae información geográfica de direcciones IP únicas utilizando la base de datos GeoLite2.
+- Herramientas de filtrado como "top k" o filtrado por umbral.
 
 #### **Plataforma**  
 
 La aplicación puede ejecutarse en:
 
 1. **Entorno Local**: Usando un entorno virtual de Python para pruebas a pequeña escala.
-2. **Infraestructura en la Nube**: El proyecto utiliza **Google Cloud Platform (GCP)** con instancias de máquinas virtuales para computación distribuida, Google Cloud Dataproc y los datos de entrada y salida se almacenana en Google Cloud Storage, buckets. Los scripts gestionan automáticamente la provisión y liberación de recursos, optimizando costes y uso.
+2. **Infraestructura en la Nube**:
+   - Usando una instacia normal en GCP.
+   - Usando clusters de  Google Cloud Dataproc y almacenando los datos de entrada y salida en Google Cloud Storage, buckets. Los scripts gestionan automáticamente la provisión y liberación de recursos, optimizando costes y uso.
 
 #### **Infraestructura**  
 
 La infraestructura combina los siguientes elementos:
 
 1. **Recursos de Cómputo**:
-   - **Google Cloud Dataproc**: Plataforma administrada de Apache Spark para tareas distribuidas.
+   - **Google Cloud Dataproc**: Plataforma administrada que soporta Apache Spark para tareas distribuidas.
    - **Máquinas Virtuales**: Instancias personalizables creadas dinámicamente en GCP para soportar tareas distribuidas con Spark.
-   - **Configuración Local**: Entornos virtuales en Python 3.12 con dependencias instaladas desde requirements.txt. Los conjuntos de datos y los resultados se gestionan localmente para cargas de trabajo menores o pruebas.
+   - **Configuración Local**: Entornos virtuales en Python 3.12 con dependencias instaladas desde [requirements.txt](requirements.txt). Los conjuntos de datos y los resultados se gestionan localmente para cargas de trabajo menores o pruebas.
 2. **Almacenamiento**:
    - **Sistema de Archivos Distribuido**: Spark procesa entradas desde almacenamiento de objetos en la nube (por ejemplo, GCP Cloud Storage).
    - **Almacenamiento Local**: Usado para resultados intermedios durante pruebas locales.
@@ -188,7 +195,6 @@ La infraestructura combina los siguientes elementos:
    - La transferencia de datos dentro de GCP optimiza costes mediante su red interna.
 4. **Seguridad**:
    - Asegurada mediante políticas de IAM (Gestión de Identidades y Accesos).
-   - El acceso a la base de datos GeoLite2 y a los conjuntos de datos está restringido a procesos autorizados.
 
 ---
 
@@ -196,34 +202,43 @@ La infraestructura combina los siguientes elementos:
 
 El diseño arquitectónico de la aplicación se basa en una arquitectura modular, donde cada componente tiene una función específica en el procesamiento de datos de red. Los principales módulos son los siguientes:
 
-- **Módulo de Cálculo de Ancho de Banda**: Este módulo calcula métricas de ancho de banda, como el total de bytes, el ancho de banda en bps, la longitud mínima, máxima y promedio de los paquetes, sobre ventanas de tiempo de un segundo.
+- **Módulo de Cálculo de Ancho de Banda**: Este [módulo](df_codes/ancho_banda.py) calcula métricas de ancho de banda, como el total de bytes, el ancho de banda en bps, la longitud mínima, máxima y promedio de los paquetes, sobre ventanas de tiempo de un segundo.
 
-- **Módulo de Filtrado por Ancho de Banda**: Este módulo filtra los datos según un umbral de ancho de banda definido por el usuario, permitiendo seleccionar solo los paquetes que cumplen con ciertos criterios establecidos.
+- **Módulo de Filtrado por Ancho de Banda**: Este [módulo](df_codes/filtro_ancho_banda.py) filtra los datos según un umbral de ancho de banda definido por el usuario, permitiendo seleccionar solo los paquetes que cumplen con ciertos criterios establecidos. Este [otro](df_codes/top_ancho_banda.py) filtra por "top k" , quedandose con los k segundos con más ancho de banda.
 
-- **Módulo de Frecuencia de Protocolos**: Este módulo calcula la frecuencia de aparición de diferentes protocolos en el tráfico de red, ayudando a identificar patrones de uso a lo largo del tiempo.
+- **Módulo de Frecuencia de Protocolos**: Este [módulo](df_codes/frecuencias_protocolos.py) calcula la frecuencia de aparición de diferentes protocolos en el tráfico de red, ayudando a identificar patrones de uso a lo largo del tiempo.
 
-- **Módulo de Índice Invertido de Paquetes**: Este módulo genera un índice invertido de los paquetes basado en las palabras clave extraídas de los campos de información de los paquetes, como las banderas TCP, eventos HTTP y TLS. Este índice permite realizar búsquedas eficientes asociando paquetes con términos o palabras clave específicas.
+- **Módulo de Índice Invertido de Paquetes**: Este [módulo](df_codes/inverted_index_flags.py) genera un índice invertido de los paquetes basado en las palabras clave extraídas de los campos de información de los paquetes, como las banderas TCP, eventos HTTP y TLS. Este índice permite realizar búsquedas eficientes asociando paquetes con términos o palabras clave específicas.
 
-- **Módulo de Geolocalización de IPs**: Este módulo utiliza la base de datos GeoLite2 para obtener información geográfica de las direcciones IP presentes en los paquetes, generando una lista única de países y ciudades asociadas con las direcciones IP.
+- **Módulo de Geolocalización de IPs**: Este [módulo](df_codes/ips_ubicacion.py) utiliza la base de datos GeoLite2 para obtener información geográfica de las direcciones IP presentes en los paquetes, generando una lista única de países y ciudades asociadas con las direcciones IP.
 
-- **Módulo de Promedio de Ancho de Banda por Protocolo**: Este módulo calcula el promedio de ancho de banda por cada protocolo, proporcionando una visión detallada del uso de la red por protocolo.
+- **Módulo de Promedio de Ancho de Banda por Protocolo**: Este [módulo](df_codes/media_ancho_banda_protocolo.py) calcula el promedio de ancho de banda por cada protocolo, proporcionando una visión detallada del uso de la red por protocolo.
 
 El código está escrito en Python y se organiza en varios scripts que realizan tareas específicas dentro del flujo de trabajo general de la aplicación. Cada uno de estos scripts utiliza Apache Spark para procesar los datos en paralelo y generar resultados de manera eficiente. Además incluimos scripts para su ejecucion en local y ejecucion en clusters encargandose el script tanto de su creación como de su destruccion.
 
 En lugar de trabajar con RDDs (Resilient Distributed Datasets), el código emplea DataFrames de Apache Spark, ya que proporcionan una abstracción de alto nivel que permite realizar consultas más optimizadas y legibles. Los DataFrames ofrecen un conjunto más amplio de operaciones integradas, lo que hace que las tareas de transformación y agregación de datos sean más fáciles de implementar.
 
-A continuación se describen las principales librerías utilizadas en el proyecto y su propósito, el resto de librerias se pueden encontrar en el archivo [requeriments.txt](./requeriments.txt):
+A continuación se describen las principales librerías utilizadas en el proyecto y su propósito, el resto de librerias se pueden encontrar en el archivo [requeriments.txt](requeriments.txt) y [requirements2.txt](./requirements2.txt) el primero usado para Spark y los df_codes y el segundo para el analisis de los datos posterior:
 
 - **geoip2**: Esta librería se utiliza para la geolocalización de direcciones IP, extrayendo información como país y ciudad a partir de bases de datos como GeoLite2.
 - **pyspark**: La principal librería utilizada para trabajar con Apache Spark desde Python. Proporciona las clases y funciones necesarias para trabajar con DataFrames y realizar operaciones distribuidas
 
-Ademas es necesario descargarse la base de datos [GeoLite2-City.mmdb](https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb) la cual proviene de este [repositorio de github](https://github.com/P3TERX/GeoLite.mmdb?tab=readme-ov-file). Los scripts de ejcución ya se encargan de su descarga.
+Analisis:
+
+- **matplotlib**: Bibloteca de python para hacer graficas
+- **Pandas**: Facilita al lectura de archivos CSV
+- **Geopy**: Es una biblioteca de Python que proporciona herramientas para realizar tareas de geocodificación y operaciones relacionadas con la ubicación utilizando servicios de geolocalización.
+- **GeoPandas**: Es una biblioteca de Python diseñada para facilitar el trabajo con datos geoespaciales.
+
+Ademas es necesario descargarse la base de datos [GeoLite2-City.mmdb](https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb) la cual proviene de este [repositorio de github](https://github.com/P3TERX/GeoLite.mmdb?tab=readme-ov-file). Los scripts de ejcución local fuera del cloud se encargan de su descarga.
 
 ---
 
 ### Uso (incluyendo capturas de pantalla que demuestren su funcionamiento)
 
 #### **Uso fuera de la insfractuctura cloud**
+
+El script ["script_ejecucion_local"](script_ejecucion_local.sh) se encarga de instalar python, crear el entorno virtual, instalar las dependencias, instalar la base de datos para la geolocalización de Ips, comprobación de existencia del direcotoro de salida, ejecución de los modulo y borrado de entorno virtual.
 
 ```bash
 ./script_ejecucion_local.sh <ancho de banda para el filtro> <Comparador 1 > , 0 <= > <top k> <dataset>
@@ -279,7 +294,7 @@ Funcionamiento
 
 #### **Maquina local en el cloud**
 
-Para ejecutar la aplicación en una  maquina local de GCP hemos hecho varios scripts para ocuparnos de la creación , ejecución y eliminación de la maquina.
+Para ejecutar la aplicación en una  maquina local de GCP hemos hecho varios scripts para ocuparnos de la [creación](local_cloud_scripts/crear_maquina.sh) , [ejecución](local_cloud_scripts/ejecucion_spark.sh) y [eliminación de la maquina](local_cloud_scripts/borrar_maquina.sh). No hemos podido unificarlos debido a la conexión ssh y nuestro desconocimiento de como ejecutar scripts tras ella. En este caso los scripts no se ocupan de descargar la base de datos de las IPs pero si de resolver dependencias. Al haber separado al creacion y al ejecución hemos decidido que las dependencias se instalen antes de la ejecución, pudiendo asi reutilizar los scripts y la plantilla para otros proyectos con Spark y asi reducir espacio evitando librerias innecesarias.
 
 Creación de la maquina:
 
@@ -297,7 +312,7 @@ Opciones:
   -h                   Muestra esta ayuda y termina
 ```
 
-Ejemplo de ejecución,creacion de una maquina con 4 vCpus y 16 GB de RAM:
+Ejemplo de ejecución, creacion de una maquina con 4 vCpus y 16 GB de RAM:
 
 ```bash
 /crear_maquina.sh -t e2-standard-4
@@ -404,15 +419,15 @@ Deleted [https://www.googleapis.com/compute/v1/projects/lab1cloudbigdata/zones/e
 
 #### **Cluster**
 
-Para su ejecucion es necesario un bucket con este contenido, si el bucket contiene el contenido de este repositorio funciona:
+Para su ejecucion es necesario un bucket con este contenido,el del proyecto gs://finalprojectbucketgroup9, si el bucket  no contiene el contenido de este repositorio no funcionara el scripts, siendo no esencial el directorio dataset ya que se le pasa como argumento al script:
 
 ![contenido_bucket](./imagenes/contenido_bucktet1.png)
 
-![contenido_bucket](./imagenes/contenido_bucktet2.png)
-
 ![contenido_bucket](./imagenes/contenido_bucktet3.png)
 
-El script se ocupa tanto de la creación, ejecución y eliminación del cluster:
+El archivo [dependencies.zip](enlace_dependencies.txt) es necesario para poder resolver dependencias en el cluster.
+
+El [script](cluster_scripts/script_cluster.sh) se ocupa tanto de la creación, ejecución y eliminación del cluster:
 
 ```bash
 ./script_cluster.sh -h
@@ -467,7 +482,7 @@ Generando el directorio en el output pasado:
 
 Todos los outputs son archivos csv con el formato descrito a continuación, además Output_frecuencia_protocolos, Output_ip_ubicación, Output_media_anchobanda_protocolo, Output_top_anchobanda son el resultado completo de la ejecución , el resto es solo parcial:
 
-Output_anchobanda:
+`Output_anchobanda:
 
 | Start Time                      | End Time                        | Total Bytes | Bandwidth (bps) | Min Length | Max Length | Packet Count | Avg Length       |
 |---------------------------------|----------------------------------|-------------|-----------------|------------|------------|--------------|------------------|
@@ -479,12 +494,6 @@ Output_anchobanda:
 | 2022-06-01T11:32:35.000+02:00  | 2022-06-01T11:32:36.000+02:00   | 861708      | 6893664         | 40         | 1500       | 1124         | 766.644128113879 |
 | 2022-06-01T11:32:36.000+02:00  | 2022-06-01T11:32:37.000+02:00   | 1735636     | 13885088        | 40         | 1500       | 1856         | 935.1487068965517 |
 | 2022-06-01T11:32:37.000+02:00  | 2022-06-01T11:32:38.000+02:00   | 237404      | 1899232         | 40         | 1500       | 332          | 715.0722891566265 |
-| 2022-06-01T11:32:38.000+02:00  | 2022-06-01T11:32:39.000+02:00   | 320238      | 2561904         | 40         | 1500       | 482          | 664.3941908713693 |
-| 2022-06-01T11:32:39.000+02:00  | 2022-06-01T11:32:40.000+02:00   | 491554      | 3932432         | 40         | 1500       | 651          | 755.0752688172043 |
-| 2022-06-01T11:32:40.000+02:00  | 2022-06-01T11:32:41.000+02:00   | 107552      | 860416          | 40         | 1500       | 158          | 680.7088607594936 |
-| 2022-06-01T11:32:41.000+02:00  | 2022-06-01T11:32:42.000+02:00   | 326070      | 2608560         | 40         | 1500       | 448          | 727.8348214285714 |
-| 2022-06-01T11:32:42.000+02:00  | 2022-06-01T11:32:43.000+02:00   | 378062      | 3024496         | 40         | 1500       | 393          | 961.9898218829517 |
-| 2022-06-01T11:32:43.000+02:00  | 2022-06-01T11:32:44.000+02:00   | 259266      | 2074128         | 40         | 1500       | 269          | 963.8141263940521 |
 
 Output_frecuencia_protocolos:
 
@@ -549,10 +558,6 @@ Output_filtro_anchobanda:
 | 2022-06-01T11:32:31.000+02:00 | 2022-06-01T11:32:32.000+02:00 | 360         | 2880            | 40         | 172        | 5            | 72.0              |
 | 2022-06-01T11:32:32.000+02:00 | 2022-06-01T11:32:33.000+02:00 | 60          | 480             | 60         | 60         | 1            | 60.0              |
 | 2022-06-01T11:32:34.000+02:00 | 2022-06-01T11:32:35.000+02:00 | 305         | 2440            | 40         | 185        | 4            | 76.25             |
-| 2022-06-01T12:30:04.000+02:00 | 2022-06-01T12:30:05.000+02:00 | 1442        | 11536           | 40         | 1402       | 2            | 721.0             |
-| 2022-06-01T18:23:26.000+02:00 | 2022-06-01T18:23:27.000+02:00 | 94          | 752             | 40         | 54         | 2            | 47.0              |
-| 2022-06-01T18:23:28.000+02:00 | 2022-06-01T18:23:29.000+02:00 | 142         | 1136            | 40         | 102        | 2            | 71.0              |
-| 2022-06-01T18:24:16.000+02:00 | 2022-06-01T18:24:17.000+02:00 | 94          | 752             | 40         | 54         | 2            | 47.0              |
 
 Output_top_anchobanda:
 
@@ -562,12 +567,6 @@ Output_top_anchobanda:
 | 2022-06-01T13:21:44.000+02:00 | 2022-06-01T13:21:45.000+02:00 | 1236179     | 9889432         |
 | 2022-06-01T15:20:36.000+02:00 | 2022-06-01T15:20:37.000+02:00 | 1191352     | 9530816         |
 | 2022-06-01T15:35:26.000+02:00 | 2022-06-01T15:35:27.000+02:00 | 1156857     | 9254856         |
-| 2022-06-01T14:40:16.000+02:00 | 2022-06-01T14:40:17.000+02:00 | 1138308     | 9106464         |
-| 2022-06-01T14:29:16.000+02:00 | 2022-06-01T14:29:17.000+02:00 | 1122683     | 8981464         |
-| 2022-06-01T14:46:52.000+02:00 | 2022-06-01T14:46:53.000+02:00 | 1114371     | 8914968         |
-| 2022-06-01T12:26:50.000+02:00 | 2022-06-01T12:26:51.000+02:00 | 1081350     | 8650800         |
-| 2022-06-01T16:13:42.000+02:00 | 2022-06-01T16:13:43.000+02:00 | 1078664     | 8629312         |
-| 2022-06-01T11:47:45.000+02:00 | 2022-06-01T11:47:46.000+02:00 | 1034655     | 8277240         |
 
 ---
 
@@ -586,6 +585,8 @@ Para calcular los speed ups se ha utlizado la siguiente formula: $Speed\text{-}u
 | 5     | 36                  | 1.72                   | 37                          | 1.49                              | 65                  | 1.89                   | 36                        | 1.61                         | 11                        | 1.09                       | 12                     | 1.00                   | 48                 | 1.63                | 245               | 1.54           |
 | 6     | 38                  | 1.63                   | 38                          | 1.45                              | 69                  | 1.78                   | 35                        | 1.66                         | 12                        | 1.00                       | 12                     | 1.00                   | 51                 | 1.53                | 255               | 1.48           |
 
+Podemos observar que en este caso la diferencia entre 2 hilos y un hilo por vCpu no es significativa, tambien apreciamos una bajada en los 6 hilos respecto a los anteirores que se puede explicar debido al coste de la comunicación entre hilos y los cambio de contexto. Teniendo encuesta los costes , la mejor opcion relación tiempo-coste seria el númeor de vCpus que tiene la maquina debido a que asi se usarían todas ya que pagarías por todas ellas.
+
 #### **Speed-up en maquina local con distinta cantidad de vCpus**
 
 | vCPUs | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
@@ -594,9 +595,11 @@ Para calcular los speed ups se ha utlizado la siguiente formula: $Speed\text{-}u
 | 8     | 54                  | 1.15                   | 49                          | 1.12                              | 98                  | 1.26                   | 55                        | 1.05                         | 10                        | 1.20                       | 10                     | 1.20                   | 68                 | 1.15                | 339               | 1.12           |
 | 16    | 51                  | 1.22                   | 46                          | 1.20                              | 96                  | 1.28                   | 50                        | 1.16                         | 10                        | 1.20                       | 9                      | 1.33                   | 68                 | 1.15                | 330               | 1.14           |
 
+Se aprecia una mejoria del 12-14% al aumentar las vCpus, no siendo rentable economicamnte ya que los costos se duplican según bajamos en la tabla y no se adquiere una mejoría en el tiempo de ejecución necesaria para amortizarlo. Este se debe a que usando 1 solo hilo no trabajan todas las vCpus.
+
 #### **Speed-up en maquina local en la nube combinando hilos y vCpus**
 
-No hemos dispuesto de timpoi suficiente como probar una gran combinación pero intuimos observando los speed-up anteriores que el mismo número de hilos  que de vCpus alcanza un valor de speed-up cercano al máximo alcanzable
+No hemos dispuesto de tiempo suficiente como probar una gran combinación pero intuimos observando los speed-up anteriores y los apuntes que el mismo número de hilos  que de vCpus alcanza un valor de speed-up cercano al máximo alcanzable.
 
 | vCPUs | Hilos | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
 |-------|-------|---------------------|-------------------------|-----------------------------|-----------------------------------|---------------------|-------------------------|---------------------------|-------------------------------|---------------------------|-----------------------------|------------------------|-------------------------|--------------------|--------------------|-------------------|----------------|
@@ -606,6 +609,8 @@ No hemos dispuesto de timpoi suficiente como probar una gran combinación pero i
 | 16    | 2     | 37                  | 1.68                    | 31                          | 1.77                              | 58                  | 2.12                    | 31                        | 1.87                         | 10                        | 1.20                        | 10                     | 1.20                   | 40                 | 1.95                | 217               | 1.74           |
 | 16    | 16    | 19                  | 3.26                    | 17                          | 3.24                              | 27                  | 4.56                    | 17                        | 3.41                         | 10                        | 1.20                        | 10                     | 1.20                   | 21                 | 3.71                | 121               | 3.13           |
 
+Aquí podemos observar que al usar el mismo número de hilos que de vCpus mejoran los tiempos en 100% y 200% lo que hace que sea más  rentable las 8 vCpus que 4 ya que el coste es el doble y el tiempo menos de la mitad , pero no con las 16 vCpus que aumenta el coste *4 pero solo reduce a un poco menos de un  tercio el tiempo.
+
 #### **Speed-up en cluster con distinta cantidad de nodos**
 
 | vCPUs | Nodos | Ancho de Banda (s) | Speed-up Ancho de Banda | Frecuencia de Protocolos (s) | Speed-up Frecuencia de Protocolos | Inverted Index (s) | Speed-up Inverted Index | Media Ancho de Banda (s) | Speed-up Media Ancho de Banda | Filtro Ancho de Banda (s) | Speed-up Filtro Ancho de Banda | Top Ancho de Banda (s) | Speed-up Top Ancho de Banda | IPs Ubicación (s) | Speed-up IPs Ubicación | Total Módulos (s) | Speed-up Total |
@@ -614,7 +619,9 @@ No hemos dispuesto de timpoi suficiente como probar una gran combinación pero i
 | 4    | 4     | 69                  | 1.16                    | 50                          | 1.28                              | 60                  | 1.42                    | 50                        | 1.30                         | 40                        | 1.18                        | 40                     | 1.23                   | 66                 | 1.27                | 375               | 1.26           |
 | 4    | 5     | 62                  | 1.29                    | 48                          | 1.33                              | 60                  | 1.42                    | 45                        | 1.44                         | 40                        | 1.18                        | 39                     | 1.26                   | 62                 | 1.35                | 356               | 1.33           |
 
-No podemos evaluar con mas porque llegamos al limite de vCpus que tebemos de cuota en la zona europe-southwest1, permite 24 vcpus. Pero sabemos que hay un punto donde aumentar los nodos no mejora los tiempos debido a que e coste temporal de su comunicación supera el ahorra de distrubuir y parelelizar los datos y computos.
+No podemos evaluar con mas porque llegamos al limite de vCpus que tebemos de cuota en la zona europe-southwest1, permite 24 vcpus. Pero sabemos que hay un punto donde aumentar los nodos no mejora los tiempos debido a que el coste temporal de su comunicación supera el ahorra de distrubuir y parelelizar los datos y computos.
+
+Se aprecian mejorias del 26 y 33 % pero no son rentables en coste-tiempo.
 
 #### **Speed-up en cluster con distinta cantidad de vCpus**
 
@@ -622,6 +629,8 @@ No podemos evaluar con mas porque llegamos al limite de vCpus que tebemos de cuo
 |--------:|--------:|---------------------:|--------------------------:|-------------------------------:|------------------------------------:|---------------------:|--------------------------:|---------------------------:|--------------------------------:|----------------------------:|---------------------------------:|-------------------------:|------------------------------:|--------------------:|-------------------------:|--------------------:|-----------------:|
 |       4 |       2 |                   80 |                   1.00    |                             64 |                                1.00 |                   85 |                   1.00    |                         65 |                         1.00    |                          47 |                          1.00    |                       49 |                       1.00    |                  84 |                      1.00 |                 474 |          1.00    |
 |       8 |       2 |                   61 |                   1.31    |                             50 |                                1.28 |                   56 |                   1.52    |                         44 |                         1.48    |                          35 |                          1.34    |                       36 |                       1.36    |                  60 |                      1.40 |                 342 |          1.39    |
+
+Similar al caso anterior
 
 #### **Speed-up en cluster con distinta cantidad de vCpus y nodos**
 
@@ -631,13 +640,44 @@ No podemos evaluar con mas porque llegamos al limite de vCpus que tebemos de cuo
 |       2 |      10 |                   81 |                  0.99     |                             51 |                              1.25   |                   60 |                   1.42     |                         50 |                             1.30 |                          44 |                          1.07    |                       40 |                         1.23  |                  70 |                      1.20 |                 396 |          1.20    |
 | 4    | 5     | 62                  | 1.29                    | 48                          | 1.33                              | 60                  | 1.42                    | 45                        | 1.44                         | 40                        | 1.18                        | 39                     | 1.26                   | 62                 | 1.35                | 356               | 1.33           |
 
+Vuelve a ocurrir lo mismo, aunque no salga rentable en relación coste-tiempo, en el caso de procesar cantidades masivas de datos ese 33% puede significar mucho tiempo, haciendo que aunque la relación coste tiempo no sea la mejor opción ese ahorro de tiempo haga que merezca la pena.
+
 ---
 
 ### Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes
 
+No hemos utilizado ninguna característica avanzada del cloud que no haya sido explicada en clase, lo único el paso de depencias a un cluster dataproc que la hemos realizado mediante la opcion :
+
+```bash
+   --py-files $BUCKET/dependencies.zip 
+```
+
+Al realizar la llamada a :
+
+```gcloud
+gcloud dataproc jobs submit pyspark $BUCKET/df_codes/ips_ubicacion.py \
+    --cluster=$CLUSTER_NAME
+```
+
+Donde [dependencies](enlace_dependencies.txt) es un archivo comprimido que contiene el resultado de instalar un [requirements.txt](./requiriments.txt) en un directorio y luego comprimir todo en un archivo ".zip". Esto incluye todas las dependencias necesarias para ejecutar el script [`ips_ubicacion.py`](./df_codes/ips_ubicacion.py) en el clúster Dataproc.
+
+Además hemos utilizado matplotlib, un modulo de python para hacer graficas, para mostrar de forma visual los resultados de distintos módulos.
+
+Un aspecto desafiante que hemos encontrado a la hora de implementar el proyecto es la arquitectura ya que estabamos acostumbrados a realizar todo en el mismo lenguaje y maquina. Esta mezcla de bash con los comandos de gcloud y python nos ha resultado costoso en tiempo de realizar. También ha sido desafiante el cambio de paradigma a programación funcional para trabajar con los dataframes de spark ya que el paradigma que más acostumbrados estamos a usar es el imperativo.
+
 ---
 
-### Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes
+### Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes.
+
+Para facilitar las conclusiones hemos generado una serie de graficas con los archivos de salida al ejecutar el programa con el datasets entero:
+
+![graficas_ancho_banda](./graficas/grafica_ancho_banda.jpeg)
+
+![graficas_ancho_banda_protocolo](./graficas/grafica_anchobanda_protocolos.jpeg)
+
+![graficas_ancho_banda_frecuencia](./graficas/grafica_frecuencia_protocolos.jpeg)
+
+![mapa_ciudades](./graficas/mapa_ciudades.jpeg)
 
 ---
 
