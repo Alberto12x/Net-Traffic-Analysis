@@ -4,11 +4,15 @@ from pathlib import Path
 from geopy.geocoders import Nominatim
 from pathlib import Path
 import geopandas as gpd
-
+import matplotlib.dates as mdates
+import pandas as pd
+import matplotlib.pyplot as plt
+from pathlib import Path
+from datetime import datetime, timedelta
+import matplotlib.dates as mdates
 """
 Script que realiza graficas con el output por de script_ejecucion_local.sh
 """
-
 
 # Configuración del directorio y archivo
 input_directory = Path("./outputs/output_anchobanda")  
@@ -32,29 +36,38 @@ if not dataframes:
 
 combined_df = pd.concat(dataframes, ignore_index=True)
 
-# Convertir start_time a datetime
+# Convertir start_time a datetime manejando formato correcto
 combined_df["start_time"] = pd.to_datetime(combined_df["start_time"], errors="coerce")
 
-# Crear la gráfica de puntos
-plt.figure(figsize=(10, 6))
-for column in combined_df.columns:
-    if column not in ["start_time", "end_time"]:
-        plt.scatter(combined_df["start_time"], combined_df[column], label=column, alpha=0.7)
+# Filtrar columnas relevantes
+columns_to_plot = [col for col in combined_df.columns if col not in ["start_time", "end_time"]]
 
-plt.xscale("linear")
-plt.yscale("log")  
-plt.xlabel("Start Time")
+# Crear la gráfica de puntos
+plt.figure(figsize=(12, 6))
+for column in columns_to_plot:
+    plt.scatter(combined_df["start_time"], combined_df[column], label=column, alpha=0.7)
+
+# Configurar el eje x con formato de fechas y etiquetas visibles
+plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=1))  # Etiquetas cada hora
+plt.gca().xaxis.set_minor_locator(mdates.MinuteLocator(interval=10))  # Ticks menores cada 10 minutos
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d %H:%M:%S"))
+plt.xticks(rotation=45)
+
+plt.xlabel("Fecha y Hora (YYYY-MM-DD HH:MM:SS)")
 plt.ylabel("Valores (escala logarítmica)")
 plt.title("Ancho de banda")
+plt.yscale("log")
 plt.legend()
 plt.grid(True, which="both", linestyle="--", linewidth=0.5)
 
 # Guardar la gráfica como archivo JPEG
 output_file = output_directory / "grafica_ancho_banda.jpeg"
+plt.tight_layout()
 plt.savefig(output_file, format="jpeg")
 plt.close()
 
 print(f"La gráfica de puntos ha sido guardada como {output_file}")
+
 
 ################################################################################################################################################################
 ################################################################################################################################################################

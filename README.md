@@ -32,7 +32,8 @@ Proyecto final del grupo 9 de la asignatura de Cloud y Big Data de la Universida
       - [**Speed-up en cluster con distinta cantidad de vCpus**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus)
       - [**Speed-up en cluster con distinta cantidad de vCpus y nodos**](#speed-up-en-cluster-con-distinta-cantidad-de-vcpus-y-nodos)
     - [Características avanzadas, como herramientas/modelos/plataformas no explicadas en clase, funciones avanzadas, técnicas para mitigar los sobrecostes, aspectos de implementación desafiantes](#características-avanzadas-como-herramientasmodelosplataformas-no-explicadas-en-clase-funciones-avanzadas-técnicas-para-mitigar-los-sobrecostes-aspectos-de-implementación-desafiantes)
-    - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes.](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
+    - [Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes](#conclusiones-incluyendo-objetivos-alcanzados-mejoras-sugeridas-lecciones-aprendidas-trabajo-futuro-ideas-interesantes)
+      - [**Mejoras sugeridos y trabajo futuro**](#mejoras-sugeridos-y-trabajo-futuro)
     - [Referencias](#referencias)
 
 ## Participantes
@@ -667,17 +668,38 @@ Un aspecto desafiante que hemos encontrado a la hora de implementar el proyecto 
 
 ---
 
-### Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes.
+### Conclusiones, incluyendo objetivos alcanzados, mejoras sugeridas, lecciones aprendidas, trabajo futuro, ideas interesantes
 
 Para facilitar las conclusiones hemos generado una serie de graficas con los archivos de salida al ejecutar el programa con el datasets entero:
 
 ![graficas_ancho_banda](./graficas/grafica_ancho_banda.jpeg)
 
+Podemos observar varias cosas:
+- La cantidad de paquetes por segundo varia entre los 100 y 1000  hasta el 2022-06-01 16:00:00 donde baja a 5-6 paquetes por segundo.
+- El ancho de banda ronda los 5 millones de bps hasta la misma fecha que se deploma a 1000 bps.
+- El tamaño del paquete mas grande se mantiene en los 1500 hasta el misma fecha que antes que empieza a variar ente 100-500 bits.
+
+Este patron se repite en todos los colores por lo que se ve que en esa fecha , lo cual puede ser una caida de un servidor o un cambio en la calidad de la transmisión del video.
+
 ![graficas_ancho_banda_protocolo](./graficas/grafica_anchobanda_protocolos.jpeg)
+
+La gráfica muestra que el protocolo THRIFT tiene el mayor ancho de banda medio, lo cual podría deberse a la presencia de grandes transferencias de datos o a un número reducido de registros que influyen en el cálculo de la media. El protocolo TCP presenta un ancho de banda considerable y consistente, acorde a su función en la transmisión confiable de datos. Por otro lado, TLSv1.2 y TLSv1.3 tienen valores intermedios, lo que sugiere un uso moderado en tráfico seguro. Finalmente, HTTP muestra el menor ancho de banda medio, lo cual es coherente con su uso habitual en transferencias de datos más ligeras. Sería necesario como trabajo futuro revisar la cantidad de registros y la posible presencia de valores atípicos, especialmente en el caso de THRIFT.
 
 ![graficas_ancho_banda_frecuencia](./graficas/grafica_frecuencia_protocolos.jpeg)
 
+El protocolo que más se repite es TCP, lo cual es esperable debido a su uso predominante en la transmisión confiable de datos. En aplicaciones como videos en directo, donde se envían grandes cantidades de paquetes, TCP es el protocolo ideal porque garantiza la entrega de los datos de forma ordenada y sin pérdidas. Los demás protocolos, como TLSv1.2, TLSv1.3, HTTP y THRIFT, tienen frecuencias mucho menores, lo que sugiere un uso más específico o reducido en comparación con TCP que concuerda con nuestro conocimiento sobre protocoles de redes.
+
 ![mapa_ciudades](./graficas/mapa_ciudades.jpeg)
+
+Observamos que las IP provienen de varias regiones del mundo, principalmente Corea del Sur, Estados Unidos y Filipinas. Aunque no disponemos de las frecuencias para determinar cuál es la región predominante, la distribución no parece ser muy dispersa globalmente. Esto sugiere que el público objetivo del video en directo se concentra en regiones específicas, lo que permitiría adaptar el idioma o contenido del directo a las preferencias de estas áreas.
+
+#### **Mejoras sugeridos y trabajo futuro**
+
+Como mejoras y trabajo futuro se nos ocurren varias cosas relacionadas con el analisis y con el uso del cloud.
+
+Respecto al analisis se podria ver la frecuencia de ubicacion con las ips para ver la localidad del público, asi como integrar las funciones de filtrado e indice invertido al resto de funciones y módulos.
+
+Respecto al uso del cloud se nos ocurre que los datos de red se pueden procesa en streaming redireccionandolos a pub/sub de GCP y procesandolo con Apache Beam y Dataflow , esto sería interesante debido a que los módulos no realizan operaciones demasiado complejas. El streaming sería "Stateful Stream Processing" ya que queremos resultados de todos los paquetes y aprovechamos el streaming para utilizar menos memoria que lo que sería necesario si se analizara en lotes.
 
 ---
 
