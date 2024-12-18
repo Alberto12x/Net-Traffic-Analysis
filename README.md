@@ -421,7 +421,7 @@ Deleted [https://www.googleapis.com/compute/v1/projects/lab1cloudbigdata/zones/e
 
 #### **Cluster**
 
-Para su ejecucion es necesario un bucket con este contenido,el del proyecto gs://finalprojectbucketgroup9, si el bucket  no contiene el contenido de este repositorio no funcionara el scripts, siendo no esencial el directorio dataset ya que se le pasa como argumento al script:
+Para su ejecucion es necesario un bucket con este contenido,el del proyecto gs://finalprojectbucketgroup9, si el bucket  no contiene el contenido de este repositorio no funcionará el script, siendo no esencial el directorio dataset ya que se le pasa como argumento:
 
 ![contenido_bucket](./imagenes/contenido_bucktet1.png)
 
