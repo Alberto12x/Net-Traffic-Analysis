@@ -232,7 +232,7 @@ Analisis:
 - **Geopy**: Es una biblioteca de Python que proporciona herramientas para realizar tareas de geocodificación y operaciones relacionadas con la ubicación utilizando servicios de geolocalización.
 - **GeoPandas**: Es una biblioteca de Python diseñada para facilitar el trabajo con datos geoespaciales.
 
-Ademas es necesario descargarse la base de datos [GeoLite2-City.mmdb](https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb) la cual proviene de este [repositorio de github](https://github.com/P3TERX/GeoLite.mmdb?tab=readme-ov-file). Los scripts de ejcución local fuera del cloud se encargan de su descarga.
+Ademas es necesario descargarse la base de datos [GeoLite2-City.mmdb](https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb) la cual proviene de este [repositorio de github](https://github.com/P3TERX/GeoLite.mmdb?tab=readme-ov-file). Los scripts de ejecución local fuera del cloud se encargan de su descarga.
 
 ---
 
