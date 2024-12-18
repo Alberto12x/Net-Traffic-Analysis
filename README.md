@@ -227,7 +227,7 @@ A continuación se describen las principales librerías utilizadas en el proyect
 
 Analisis:
 
-- **matplotlib**: Bibloteca de python para hacer graficas
+- **matplotlib**: Bibloteca de python para hacer gráficas
 - **Pandas**: Facilita al lectura de archivos CSV
 - **Geopy**: Es una biblioteca de Python que proporciona herramientas para realizar tareas de geocodificación y operaciones relacionadas con la ubicación utilizando servicios de geolocalización.
 - **GeoPandas**: Es una biblioteca de Python diseñada para facilitar el trabajo con datos geoespaciales.
@@ -484,7 +484,7 @@ Generando el directorio en el output pasado:
 
 Todos los outputs son archivos csv con el formato descrito a continuación, además Output_frecuencia_protocolos, Output_ip_ubicación, Output_media_anchobanda_protocolo, Output_top_anchobanda son el resultado completo de la ejecución , el resto es solo parcial:
 
-`Output_anchobanda:
+Output_anchobanda:
 
 | Start Time                      | End Time                        | Total Bytes | Bandwidth (bps) | Min Length | Max Length | Packet Count | Avg Length       |
 |---------------------------------|----------------------------------|-------------|-----------------|------------|------------|--------------|------------------|
@@ -663,7 +663,7 @@ gcloud dataproc jobs submit pyspark $BUCKET/df_codes/ips_ubicacion.py \
 
 Donde [dependencies](enlace_dependencies.txt) es un archivo comprimido que contiene el resultado de instalar un [requirements.txt](./requiriments.txt) en un directorio y luego comprimir todo en un archivo ".zip". Esto incluye todas las dependencias necesarias para ejecutar el script [`ips_ubicacion.py`](./df_codes/ips_ubicacion.py) en el clúster Dataproc.
 
-Además hemos utilizado matplotlib, un modulo de python para hacer graficas, para mostrar de forma visual los resultados de distintos módulos.
+Además hemos utilizado matplotlib, un modulo de python para hacer gráficas, para mostrar de forma visual los resultados de distintos módulos.
 
 Un aspecto desafiante que hemos encontrado a la hora de implementar el proyecto es la arquitectura ya que estabamos acostumbrados a realizar todo en el mismo lenguaje y maquina. Esta mezcla de bash con los comandos de gcloud y python nos ha resultado costoso en tiempo de realizar. También ha sido desafiante el cambio de paradigma a programación funcional para trabajar con los dataframes de spark ya que el paradigma que más acostumbrados estamos a usar es el imperativo.
 
@@ -673,7 +673,7 @@ Un aspecto desafiante que hemos encontrado a la hora de implementar el proyecto 
 
 #### **Conclusiones**
 
-Para facilitar las conclusiones hemos generado una serie de graficas con los archivos de salida al ejecutar el programa con el datasets entero:
+Para facilitar las conclusiones hemos generado una serie de gráficas con los archivos de salida al ejecutar el programa con el datasets entero:
 
 ![graficas_ancho_banda](./graficas/grafica_ancho_banda.jpeg)
 
