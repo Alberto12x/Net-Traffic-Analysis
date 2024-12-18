@@ -72,9 +72,9 @@ create_virtual_env() {
 
 # Función para instalar las dependencias desde 'requirements.txt'
 install_requirements() {
-    if [[ -f "requeriments.txt" ]]; then
-        echo -e "${GREEN}Instalando dependencias desde 'requirements.txt'...${RESET}"
-        python3 -m pip install -r requeriments.txt
+    if [[ -f "requiriments.txt" ]]; then
+        echo -e "${GREEN}Instalando dependencias desde 'requiriments.txt'...${RESET}"
+        python3 -m pip install -r requiriments.txt
         if [[ $? -eq 0 ]]; then
             echo -e "${GREEN}Dependencias instaladas con éxito.${RESET}"
         else
