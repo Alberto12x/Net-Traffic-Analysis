@@ -138,7 +138,7 @@ Ejemplo de entrada en el dataset:
 
 El dataset que se ha utilizado en este proyecto pesa 1.3 GB.
 
-![Imagen del peso del dataset](./imagenes/peso_dataset.png)
+![Imagen del peso del dataset](./docs/docs/imagenes/peso_dataset.png)
 
 ---
 
@@ -276,21 +276,21 @@ Ejemplos :
 
 La ejecución de alguno de los dos ejemplos anteriores genera el siguiente directorio:
 
-![Imagen de la estructura de outputs](./imagenes/estructura_outputs.png)
+![Imagen de la estructura de outputs](./docs/docs/imagenes/estructura_outputs.png)
 
 Con un contenido similar en cada directorio:
 
-![Imagen del contenido de outputs](./imagenes/contenido_outputs.png)
+![Imagen del contenido de outputs](./docs/docs/imagenes/contenido_outputs.png)
 
 Capturas de pantalla del uso:
 
-![Imagen de mensajes de ayuda](./imagenes/help_local.png)
+![Imagen de mensajes de ayuda](./docs/docs/imagenes/help_local.png)
 
 Mensajes de ayuda
 
-![Funcionamiento 1 ](./imagenes/local1.png)
-![Funcionamiento 2 ](./imagenes/local2.png)
-![Funcionamiento 2 ](./imagenes/local3.png)
+![Funcionamiento 1 ](./docs/docs/imagenes/local1.png)
+![Funcionamiento 2 ](./docs/docs/imagenes/local2.png)
+![Funcionamiento 2 ](./docs/docs/imagenes/local3.png)
 
 Funcionamiento
 
@@ -337,7 +337,7 @@ Instancia creada exitosamente.
 
 Nos conectamos por ssh y subimos los archivos correspondientes para que quede el directorio de la siguiente manera:
 
-![Directorio maquina local GCP](./imagenes/directorio_local_GCP.png)
+![Directorio maquina local GCP](./docs/imagenes/directorio_local_GCP.png)
 
 Ejecución de la aplicación:
 
@@ -367,27 +367,27 @@ Ejemplo:
 
 Salida en la terminal:
 
-![GCP_local1](./imagenes/GCP_local1.png)
+![GCP_local1](./docs/imagenes/GCP_local1.png)
 
-![GCP_local2](./imagenes/GCP_local2.png)
+![GCP_local2](./docs/imagenes/GCP_local2.png)
 
-![GCP_local3](./imagenes/GCP_local3.png)
+![GCP_local3](./docs/imagenes/GCP_local3.png)
 
-![GCP_local4](./imagenes/GCP_local4.png)
+![GCP_local4](./docs/imagenes/GCP_local4.png)
 
-![GCP_local5](./imagenes/GCP_local5.png)
+![GCP_local5](./docs/imagenes/GCP_local5.png)
 
-![GCP_local6](./imagenes/GCP_local6.png)
+![GCP_local6](./docs/imagenes/GCP_local6.png)
 
-![GCP_local7](./imagenes/GCP_local7.png)
+![GCP_local7](./docs/imagenes/GCP_local7.png)
 
 Esta ejecucion genera la misma estructura de directorios que la ejecución en local fuera del cloud:
 
-![estructura_directorio_local_cloud](./imagenes/estructura_directorio_local_cloud.png)
+![estructura_directorio_local_cloud](./docs/imagenes/estructura_directorio_local_cloud.png)
 
 Con un contenido similar entre todas ellas:
 
-![estructura_directorio_local_cloud2](./imagenes/estructura_directorio_local_cloud2.png)
+![estructura_directorio_local_cloud2](./docs/imagenes/estructura_directorio_local_cloud2.png)
 
 Borrado de la maquina:
 
@@ -423,9 +423,9 @@ Deleted [https://www.googleapis.com/compute/v1/projects/lab1cloudbigdata/zones/e
 
 Para su ejecucion es necesario un bucket con este contenido,el del proyecto gs://finalprojectbucketgroup9, si el bucket  no contiene el contenido de este repositorio no funcionará el script, siendo no esencial el directorio dataset ya que se le pasa como argumento:
 
-![contenido_bucket](./imagenes/contenido_bucktet1.png)
+![contenido_bucket](./docs/imagenes/contenido_bucktet1.png)
 
-![contenido_bucket](./imagenes/contenido_bucktet3.png)
+![contenido_bucket](./docs/imagenes/contenido_bucktet3.png)
 
 El archivo [dependencies.zip](enlace_dependencies.txt) es necesario para poder resolver dependencias en el cluster.
 
@@ -460,25 +460,25 @@ Ejemplo de ejecución, $BUCKET contiene la dirección de un bucket (gs://...):
 
 Salida:
 
-![GCP_cluster1](./imagenes/GCP_cluster1.png)
+![GCP_cluster1](./docs/imagenes/GCP_cluster1.png)
 
-![GCP_cluster2](./imagenes/GCP_cluster2.png)
+![GCP_cluster2](./docs/imagenes/GCP_cluster2.png)
 
-![GCP_cluster3](./imagenes/GCP_cluster3.png)
+![GCP_cluster3](./docs/imagenes/GCP_cluster3.png)
 
-![GCP_cluster4](./imagenes/GCP_cluster4.png)
+![GCP_cluster4](./docs/imagenes/GCP_cluster4.png)
 
-![GCP_cluster5](./imagenes/GCP_cluster5.png)
+![GCP_cluster5](./docs/imagenes/GCP_cluster5.png)
 
-![GCP_cluster6](./imagenes/GCP_cluster6.png)
+![GCP_cluster6](./docs/imagenes/GCP_cluster6.png)
 
-![GCP_cluster7](./imagenes/GCP_cluster7.png)
+![GCP_cluster7](./docs/imagenes/GCP_cluster7.png)
 
-![GCP_cluster8](./imagenes/GCP_cluster8.png)
+![GCP_cluster8](./docs/imagenes/GCP_cluster8.png)
 
 Generando el directorio en el output pasado:
 
-![GCP_cluster_salida](./imagenes/GCP_cluster_salida.png)
+![GCP_cluster_salida](./docs/imagenes/GCP_cluster_salida.png)
 
 #### **Archivos outputs**
 
@@ -675,7 +675,7 @@ Un aspecto desafiante que hemos encontrado a la hora de implementar el proyecto 
 
 Para facilitar las conclusiones hemos generado una serie de gráficas con los archivos de salida al ejecutar el programa con el datasets entero:
 
-![graficas_ancho_banda](./graficas/grafica_ancho_banda.jpeg)
+![graficas_ancho_banda](./docs/graficas/grafica_ancho_banda.jpeg)
 
 Podemos observar varias cosas:
 
@@ -685,15 +685,15 @@ Podemos observar varias cosas:
 
 Este patron se repite en todos los colores por lo que se ve que en esa fecha , lo cual puede ser una caida de un servidor o un cambio en la calidad de la transmisión del video.
 
-![graficas_ancho_banda_protocolo](./graficas/grafica_anchobanda_protocolos.jpeg)
+![graficas_ancho_banda_protocolo](./docs/graficas/grafica_anchobanda_protocolos.jpeg)
 
 La gráfica muestra que el protocolo THRIFT tiene el mayor ancho de banda medio, lo cual podría deberse a la presencia de grandes transferencias de datos o a un número reducido de registros que influyen en el cálculo de la media. El protocolo TCP presenta un ancho de banda considerable y consistente, acorde a su función en la transmisión confiable de datos. Por otro lado, TLSv1.2 y TLSv1.3 tienen valores intermedios, lo que sugiere un uso moderado en tráfico seguro. Finalmente, HTTP muestra el menor ancho de banda medio, lo cual es coherente con su uso habitual en transferencias de datos más ligeras. Sería necesario como trabajo futuro revisar la cantidad de registros y la posible presencia de valores atípicos, especialmente en el caso de THRIFT.
 
-![graficas_ancho_banda_frecuencia](./graficas/grafica_frecuencia_protocolos.jpeg)
+![graficas_ancho_banda_frecuencia](./docs/graficas/grafica_frecuencia_protocolos.jpeg)
 
 El protocolo que más se repite es TCP, lo cual es esperable debido a su uso predominante en la transmisión confiable de datos. En aplicaciones como videos en directo, donde se envían grandes cantidades de paquetes, TCP es el protocolo ideal porque garantiza la entrega de los datos de forma ordenada y sin pérdidas. Los demás protocolos, como TLSv1.2, TLSv1.3, HTTP y THRIFT, tienen frecuencias mucho menores, lo que sugiere un uso más específico o reducido en comparación con TCP que concuerda con nuestro conocimiento sobre protocoles de redes.
 
-![mapa_ciudades](./graficas/mapa_ciudades.jpeg)
+![mapa_ciudades](./docs/graficas/mapa_ciudades.jpeg)
 
 Observamos que las IP provienen de varias regiones del mundo, principalmente Corea del Sur, Estados Unidos y Filipinas. Aunque no disponemos de las frecuencias para determinar cuál es la región predominante, la distribución no parece ser muy dispersa globalmente. Esto sugiere que el público objetivo del video en directo se concentra en regiones específicas, lo que permitiría adaptar el idioma o contenido del directo a las preferencias de estas áreas.
 
