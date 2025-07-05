@@ -138,7 +138,7 @@ Ejemplo de entrada en el dataset:
 
 El dataset que se ha utilizado en este proyecto pesa 1.3 GB.
 
-![Imagen del peso del dataset](./docs/docs/imagenes/peso_dataset.png)
+![Imagen del peso del dataset](./docs/imagenes/peso_dataset.png)
 
 ---
 
