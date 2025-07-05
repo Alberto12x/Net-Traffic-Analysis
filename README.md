@@ -276,21 +276,21 @@ Ejemplos :
 
 La ejecución de alguno de los dos ejemplos anteriores genera el siguiente directorio:
 
-![Imagen de la estructura de outputs](./docs/docs/imagenes/estructura_outputs.png)
+![Imagen de la estructura de outputs](./docs/imagenes/estructura_outputs.png)
 
 Con un contenido similar en cada directorio:
 
-![Imagen del contenido de outputs](./docs/docs/imagenes/contenido_outputs.png)
+![Imagen del contenido de outputs](./docs/imagenes/contenido_outputs.png)
 
 Capturas de pantalla del uso:
 
-![Imagen de mensajes de ayuda](./docs/docs/imagenes/help_local.png)
+![Imagen de mensajes de ayuda](./docs/imagenes/help_local.png)
 
 Mensajes de ayuda
 
-![Funcionamiento 1 ](./docs/docs/imagenes/local1.png)
-![Funcionamiento 2 ](./docs/docs/imagenes/local2.png)
-![Funcionamiento 2 ](./docs/docs/imagenes/local3.png)
+![Funcionamiento 1 ](./docs/imagenes/local1.png)
+![Funcionamiento 2 ](./docs/imagenes/local2.png)
+![Funcionamiento 2 ](./docs/imagenes/local3.png)
 
 Funcionamiento
 
